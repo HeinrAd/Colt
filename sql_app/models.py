@@ -16,4 +16,32 @@ class User(Base):
     house_number = Column(Integer)
     postcode = Column(Integer)
     city = Column(String)
+    can_buy = Column(Boolean, default=False)
     is_active = Column(Boolean, default=True)
+
+
+class Attendance(Base):
+    __tablename__ = "attendances"
+
+    id = Column(Integer, primary_key=True)
+    user_id = Column(Integer, ForeignKey("users.id"))
+    date = Column(String, nullable=False)
+    month = Column(Integer, nullable=False)
+    department_id = Column(Integer, ForeignKey("departments.id"))
+
+
+class Department(Base):
+    __tablename__ = "departments"
+
+    id = Column(Integer, primary_key=True)
+    title = Column(String, index=True)
+    description = Column(String, index=True)
+    price = Column(Integer, nullable=False)
+
+
+class User_Department(Base):
+    __tablename__ = "user_departments"
+
+    id = Column(Integer, primary_key=True)
+    user_id = Column(Integer, ForeignKey("users.id"))
+    department_id = Column(Integer, ForeignKey("departments.id"))

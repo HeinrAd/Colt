@@ -1,6 +1,6 @@
 from fastapi import Depends, FastAPI, HTTPException
 from sqlalchemy.orm import Session
-
+from typing import List
 from . import crud, models, schemas
 from .database import SessionLocal, engine
 
@@ -18,12 +18,32 @@ def get_db():
         db.close()
 
 
+# Create operation routes
+
+
 @app.post("/users/", response_model=schemas.User)
 def create_user(user: schemas.UserCreate, db: Session = Depends(get_db)):
     db_user = crud.get_user_by_email(db, email=user.email)
     if db_user:
         raise HTTPException(status_code=400, detail="Email already registered")
     return crud.create_user(db=db, user=user)
+
+
+@app.post("/attendances/", response_model=schemas.Attendance)
+def create_attendance(attendance: schemas.AttendanceCreate, db: Session = Depends(get_db)):
+    return crud.create_attendance(db, attendance)
+
+
+@app.post("/departments/", response_model=schemas.Department)
+def create_department(department: schemas.DepartmentCreate, db: Session = Depends(get_db)):
+    return crud.create_department(db, department)
+
+
+@app.post("/user_departments/", response_model=schemas.UserDepartment)
+def create_user_department(user_department: schemas.UserDepartmentCreate, db: Session = Depends(get_db)):
+    return crud.create_user_department(db, user_department)
+
+# Read operation routes
 
 
 @app.get("/users/", response_model=list[schemas.User])
@@ -38,3 +58,123 @@ def read_user(user_id: int, db: Session = Depends(get_db)):
     if db_user is None:
         raise HTTPException(status_code=404, detail="User not found")
     return db_user
+
+
+@app.get("/attendances/", response_model=list[schemas.Attendance])
+def read_attendences(skip: int = 0, limit: int = 100, db: Session = Depends(get_db)):
+    attendences = crud.get_attendences(db, skip=skip, limit=limit)
+    return attendences
+
+
+@app.get("/attendances/{attendance_id}", response_model=schemas.Attendance)
+def read_attendance(attendance_id: int, db: Session = Depends(get_db)):
+    attendance = crud.get_attendance_by_id(db, attendance_id)
+    if not attendance:
+        raise HTTPException(status_code=404, detail="Attendance not found")
+    return attendance
+
+
+@app.get("/attendances/{user_id}", response_model=list[schemas.Attendance])
+def get_attendances_by_user_id(user_id: int, db: Session = Depends(get_db)):
+    attendances = crud.get_attendances_by_user_id(db, user_id)
+    if not attendances:
+        raise HTTPException(
+            status_code=404, detail="No attendances found for the user")
+    return attendances
+
+
+@app.get("/departments/{department_id}", response_model=schemas.Department)
+def read_department(department_id: int, db: Session = Depends(get_db)):
+    department = crud.get_department_by_id(db, department_id)
+    if not department:
+        raise HTTPException(status_code=404, detail="Department not found")
+    return department
+
+
+@app.get("/user_departments/{user_department_id}", response_model=schemas.UserDepartment)
+def read_user_department(user_department_id: int, db: Session = Depends(get_db)):
+    user_department = crud.get_user_department_by_id(db, user_department_id)
+    if not user_department:
+        raise HTTPException(
+            status_code=404, detail="User Department not found")
+    return user_department
+
+# Update operation routes
+
+
+@app.put("/users/{user_id}", response_model=schemas.User)
+def update_user(
+    user_id: int, user_update: schemas.UserUpdate, db: Session = Depends(get_db)
+):
+    db_user = crud.get_user(db, user_id=user_id)
+    if not db_user:
+        raise HTTPException(status_code=404, detail="User not found")
+
+    return crud.update_user(db, user_id, user_update)
+
+
+@app.put("/attendances/{attendance_id}", response_model=schemas.Attendance)
+def update_attendance(attendance_id: int, attendance_update: schemas.AttendanceUpdate, db: Session = Depends(get_db)):
+    attendance = crud.get_attendance_by_id(db, attendance_id)
+    if not attendance:
+        raise HTTPException(status_code=404, detail="Attendance not found")
+
+    return crud.update_attendance(db, attendance_id, attendance_update.dict(exclude_unset=True))
+
+
+@app.put("/departments/{department_id}", response_model=schemas.Department)
+def update_department(department_id: int, department_update: schemas.DepartmentUpdate, db: Session = Depends(get_db)):
+    department = crud.get_department_by_id(db, department_id)
+    if not department:
+        raise HTTPException(status_code=404, detail="Department not found")
+
+    return crud.update_department(db, department_id, department_update.dict(exclude_unset=True))
+
+
+@app.put("/user_departments/{user_department_id}", response_model=schemas.UserDepartment)
+def update_user_department(user_department_id: int, user_department_update: schemas.UserDepartmentUpdate, db: Session = Depends(get_db)):
+    user_department = crud.get_user_department_by_id(db, user_department_id)
+    if not user_department:
+        raise HTTPException(
+            status_code=404, detail="User Department not found")
+
+    return crud.update_user_department(db, user_department_id, user_department_update.dict(exclude_unset=True))
+
+# Delete operation routes
+
+
+@app.delete("/users/{user_id}", response_model=schemas.DeleteResponse)
+def delete_user(user_id: int, db: Session = Depends(get_db)):
+    db_user = crud.get_user(db, user_id=user_id)
+    if not db_user:
+        raise HTTPException(status_code=404, detail="User not found")
+
+    return crud.delete_user(db, user_id)
+
+
+@app.delete("/attendances/{attendance_id}", response_model=schemas.DeleteResponse)
+def delete_attendance(attendance_id: int, db: Session = Depends(get_db)):
+    attendance = crud.get_attendance_by_id(db, attendance_id)
+    if not attendance:
+        raise HTTPException(status_code=404, detail="Attendance not found")
+
+    return crud.delete_attendance(db, attendance_id)
+
+
+@app.delete("/departments/{department_id}", response_model=schemas.DeleteResponse)
+def delete_department(department_id: int, db: Session = Depends(get_db)):
+    department = crud.get_department_by_id(db, department_id)
+    if not department:
+        raise HTTPException(status_code=404, detail="Department not found")
+
+    return crud.delete_department(db, department_id)
+
+
+@app.delete("/user_departments/{user_department_id}", response_model=schemas.DeleteResponse)
+def delete_user_department(user_department_id: int, db: Session = Depends(get_db)):
+    user_department = crud.get_user_department_by_id(db, user_department_id)
+    if not user_department:
+        raise HTTPException(
+            status_code=404, detail="User Department not found")
+
+    return crud.delete_user_department(db, user_department_id)
