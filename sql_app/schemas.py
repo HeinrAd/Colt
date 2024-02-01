@@ -25,6 +25,7 @@ class User(UserBase):
     postcode: int
     city: str
     is_active: bool
+    can_buy: bool
 
     class Config:
         orm_mode = True
@@ -52,12 +53,14 @@ class UserUpdate(UserBase):
 class DepartmentBase(BaseModel):
     title: str
     description: str
+    price: int
 
 
 class Department(DepartmentBase):
     id: int
     title: str
     description: str
+    price: int
 
     class Config:
         orm_mode = True
@@ -66,11 +69,13 @@ class Department(DepartmentBase):
 class DepartmentCreate(DepartmentBase):
     title: str
     description: str
+    price: int
 
 
 class DepartmentUpdate(DepartmentBase):
     title: str
     description: str
+    price: int
 
 
 class DepartmentDelete(DepartmentBase):
