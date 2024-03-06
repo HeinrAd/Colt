@@ -1,0 +1,6 @@
+{
+  "dependencies": {
+    "@ngrx/signals": "^17.1.1",
+    "@openapitools/openapi-generator-cli": "^2.11.0"
+  }
+}
