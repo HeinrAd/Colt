@@ -6,7 +6,8 @@
     "start": "ng serve",
     "build": "ng build",
     "watch": "ng build --watch --configuration development",
-    "test": "ng test"
+    "test": "ng test",
+    "generate:api": "openapi-generator-cli generate -i http://127.0.0.1:8000/openapi.json -g typescript-angular -o src/app/shared --additional-properties=ngVersion=17.0.0 --skip-validate-spec"
   },
   "private": true,
   "dependencies": {
