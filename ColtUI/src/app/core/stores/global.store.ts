@@ -7,8 +7,44 @@ import {
   withMethods,
   withState,
 } from '@ngrx/signals';
+import { DefaultService } from 'src/app/shared';
 
 export const GlobalStore = signalStore(
   { providedIn: 'root' },
-  withState({ isLoading: false })
+  withState({
+    users: [],
+    user: {},
+    attendances: [],
+    attendence: {},
+    departments: [],
+    department: {},
+    isLoading: false,
+  }),
+
+  withMethods((store, defaultSercice = inject(DefaultService)) => ({
+    loadUsers(): void {},
+    loadAttendances(): void {},
+    loadDepartments(): void {},
+
+    getUserById(id: number): void {},
+    getDepartmentById(id: number): void {},
+    getAttendancesByUserId(id: number): void {},
+    getAttendanceById(id: number): void {},
+
+    createNewUser(user: any): void {},
+    createNewAttendance(attendance: any): void {},
+    createNewDepartment(department: any): void {},
+
+    changeUser(user: any): void {},
+    changeAttendance(attendance: any): void {},
+    changeDepartment(department: any): void {},
+  })),
+
+  withHooks({
+    onInit(store) {
+      store.loadUsers();
+      store.loadAttendances();
+      store.loadDepartments();
+    },
+  })
 );
