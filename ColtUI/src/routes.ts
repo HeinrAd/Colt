@@ -5,5 +5,26 @@ export const routes: Routes = [
   {
     path: '',
     component: LayoutComponent,
+    children: [
+      {
+        path: 'mitglieder',
+        loadComponent: () =>
+          import('./app/users/users.component').then((m) => m.UsersComponent),
+      },
+      {
+        path: 'anwesenheiten',
+        loadComponent: () =>
+          import('./app/attendances/attendances.component').then(
+            (m) => m.AttendancesComponent
+          ),
+      },
+      {
+        path: 'abteilungen',
+        loadComponent: () =>
+          import('./app/departments/departments.component').then(
+            (m) => m.DepartmentsComponent
+          ),
+      },
+    ],
   },
 ];
