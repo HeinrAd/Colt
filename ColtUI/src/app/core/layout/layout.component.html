@@ -1,7 +1,7 @@
 <app-topbar></app-topbar>
-<app-sidebar></app-sidebar>
-<div class="inline">
-  <p-card class="inline" header="{{ cardHeader }}">
+<div class="flex">
+  <app-sidebar></app-sidebar>
+  <p-card header="{{ cardHeader }}">
     <router-outlet class="flex justify-content-center mt-4" />
   </p-card>
 </div>
