@@ -2,7 +2,16 @@
   <div>
     <h6>Neue Anwesenheit eintragen</h6>
     <div class="flex">
-      <p-dropdown placeholder="Benutzer" />
+      <p-dropdown placeholder="Benutzer" [style]="{ 'min-width': '20rem' }" />
+      <p-calendar
+        [ngModel]="selectedDate()"
+        dateFormat="dd.mm.yy"
+        [showIcon]="true"
+        placeholder="Datum wählen"
+        [showButtonBar]="true"
+        class="SelectorButton ml-3"
+      />
+      <p-button label="Speichern" class="ml-3" />
     </div>
   </div>
   <div class="mt-4">
