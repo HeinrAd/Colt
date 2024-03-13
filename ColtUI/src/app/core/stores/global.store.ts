@@ -11,15 +11,18 @@ import { DefaultService } from 'src/app/shared';
 
 export const GlobalStore = signalStore(
   { providedIn: 'root' },
+
   withState({
     users: [],
     user: {},
     attendances: [],
-    attendence: {},
+    attendance: {},
     departments: [],
     department: {},
-    isLoading: false,
+    isLoading: true,
   }),
+
+  withComputed((store) => ({})),
 
   withMethods((store, defaultSercice = inject(DefaultService)) => ({
     loadUsers(): void {},
@@ -38,6 +41,10 @@ export const GlobalStore = signalStore(
     changeUser(user: any): void {},
     changeAttendance(attendance: any): void {},
     changeDepartment(department: any): void {},
+
+    checkIfCertified(user: any): boolean {
+      return false;
+    },
   })),
 
   withHooks({
