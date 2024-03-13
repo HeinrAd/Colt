@@ -7,7 +7,7 @@ import {
   withMethods,
   withState,
 } from '@ngrx/signals';
-import { DefaultService } from 'src/app/shared';
+import { DefaultService } from 'src/app/shared/';
 
 export const GlobalStore = signalStore(
   { providedIn: 'root' },
@@ -24,7 +24,7 @@ export const GlobalStore = signalStore(
 
   withComputed((store) => ({})),
 
-  withMethods((store, defaultSercice = inject(DefaultService)) => ({
+  withMethods((store) => ({
     loadUsers(): void {},
     loadAttendances(): void {},
     loadDepartments(): void {},

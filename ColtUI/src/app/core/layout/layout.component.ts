@@ -14,6 +14,5 @@ import { RouterModule } from '@angular/router';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class LayoutComponent {
-  readonly globalStore = inject(GlobalStore);
   cardHeader: string | undefined;
 }
