@@ -1,4 +1,5 @@
 from fastapi import Depends, FastAPI, HTTPException
+from fastapi.routing import APIRoute
 from sqlalchemy.orm import Session
 from typing import List
 from . import crud, models, schemas
@@ -178,3 +179,18 @@ def delete_user_department(user_department_id: int, db: Session = Depends(get_db
             status_code=404, detail="User Department not found")
 
     return crud.delete_user_department(db, user_department_id)
+
+
+def use_route_names_as_operation_ids(app: FastAPI) -> None:
+    """
+    Simplify operation IDs so that generated API clients have simpler function
+    names.
+
+    Should be called only after all routes have been added.
+    """
+    for route in app.routes:
+        if isinstance(route, APIRoute):
+            route.operation_id = route.name  # in this case, 'read_items'
+
+
+use_route_names_as_operation_ids(app)
