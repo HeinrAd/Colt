@@ -1,1 +1,27 @@
-<p>attendances works!</p>
+<div class="p-2">
+  <div>
+    <h6>Neue Anwesenheit eintragen</h6>
+    <div class="flex">
+      <p-dropdown placeholder="Benutzer" />
+    </div>
+  </div>
+  <div class="mt-4">
+    <h6>Liste aller Anwesenheiten</h6>
+    <p-table [value]="attandences" styleClass="p-datatable-striped">
+      <ng-template pTemplate="header">
+        <tr>
+          <th>Name</th>
+          <th>Tag</th>
+          <th>Abteilung</th>
+        </tr>
+      </ng-template>
+      <ng-template pTemplate="body" let-attandence>
+        <tr>
+          <th>{{ attandence.user_id }}</th>
+          <th>{{ attandence.date }}</th>
+          <th>{{ attandence.department_id }}</th>
+        </tr>
+      </ng-template>
+    </p-table>
+  </div>
+</div>
