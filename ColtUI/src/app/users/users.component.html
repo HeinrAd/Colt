@@ -1,1 +1,7 @@
-<p>users works!</p>
+<div class="card">
+  <p-dataView #dv [value]="users">
+    <ng-template pTemplate="list" let-users>
+      <div class="grid grid-nogutter"></div>
+    </ng-template>
+  </p-dataView>
+</div>
