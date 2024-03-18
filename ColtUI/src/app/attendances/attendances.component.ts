@@ -42,8 +42,6 @@ export class AttendancesComponent implements OnInit {
   currentDate!: Date;
 
   ngOnInit(): void {
-    this.layoutComponent.cardHeader = 'Anwesenheiten';
-
     this.currentDate = new Date();
     this.selectedDate.set(this.currentDate);
 
@@ -54,6 +52,83 @@ export class AttendancesComponent implements OnInit {
         month: 'März',
         department_id: 1,
         id: 1,
+      },
+      {
+        user_id: 2,
+        date: '13.03.2024',
+        month: 'März',
+        department_id: 1,
+        id: 2,
+      },
+      {
+        user_id: 3,
+        date: '13.03.2024',
+        month: 'März',
+        department_id: 1,
+        id: 3,
+      },
+      {
+        user_id: 4,
+        date: '13.03.2024',
+        month: 'März',
+        department_id: 1,
+        id: 4,
+      },
+      {
+        user_id: 5,
+        date: '13.03.2024',
+        month: 'März',
+        department_id: 1,
+        id: 5,
+      },
+      {
+        user_id: 6,
+        date: '13.03.2024',
+        month: 'März',
+        department_id: 1,
+        id: 6,
+      },
+      {
+        user_id: 7,
+        date: '13.03.2024',
+        month: 'März',
+        department_id: 1,
+        id: 7,
+      },
+      {
+        user_id: 8,
+        date: '13.03.2024',
+        month: 'März',
+        department_id: 1,
+        id: 8,
+      },
+      {
+        user_id: 9,
+        date: '13.03.2024',
+        month: 'März',
+        department_id: 1,
+        id: 9,
+      },
+      {
+        user_id: 10,
+        date: '13.03.2024',
+        month: 'März',
+        department_id: 1,
+        id: 10,
+      },
+      {
+        user_id: 11,
+        date: '13.03.2024',
+        month: 'März',
+        department_id: 1,
+        id: 11,
+      },
+      {
+        user_id: 12,
+        date: '13.03.2024',
+        month: 'März',
+        department_id: 1,
+        id: 12,
       },
     ];
 

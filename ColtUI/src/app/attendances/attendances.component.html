@@ -1,14 +1,12 @@
-<div class="p-2">
+<div>
   <div>
-    <h6 class="font-bold" style="text-decoration: underline">
-      Neue Anwesenheit eintragen
-    </h6>
+    <h6>Neue Anwesenheit eintragen</h6>
     <div class="flex">
       <div>
         <label for="dropdown" class="font-bold block mb-2">Benutzer</label>
         <p-dropdown inputId="dropdown" [style]="{ 'min-width': '20rem' }" />
       </div>
-      <div class="ml-3">
+      <div class="ml-3" [style]="{ 'min-width': '106px' }">
         <label for="calender" class="font-bold block mb-2">Datum</label>
         <p-calendar
           inputId="calender"
@@ -19,17 +17,31 @@
           [showIcon]="true"
         />
       </div>
-      <p-button label="Speichern" class="ml-3" (onClick)="saveAttendance()" />
+      <p-button
+        label="Eintragen"
+        class="ml-3"
+        [style]="{ height: '4rem' }"
+        (onClick)="saveAttendance()"
+      />
     </div>
   </div>
+  <hr class="mt-4 mb-4" />
   <div class="mt-4">
     <h6>Liste aller Anwesenheiten</h6>
-    <p-table [value]="attandences" styleClass="p-datatable-striped">
+    <p-table
+      [value]="attandences"
+      styleClass="p-datatable-striped"
+      [paginator]="true"
+      [rows]="10"
+      [rowsPerPageOptions]="[10, 20, 50]"
+    >
       <ng-template pTemplate="header">
         <tr>
-          <th>Name</th>
-          <th>Tag</th>
-          <th>Abteilung</th>
+          <th pSortableColumn="user_id">Name <p-sortIcon field="user_id" /></th>
+          <th pSortableColumn="date">Tag <p-sortIcon field="date" /></th>
+          <th pSortableColumn="department_id">
+            Abteilung <p-sortIcon field="department_id" />
+          </th>
         </tr>
       </ng-template>
       <ng-template pTemplate="body" let-attandence>
