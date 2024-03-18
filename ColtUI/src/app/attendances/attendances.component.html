@@ -1,6 +1,8 @@
 <div>
   <div>
-    <h6>Neue Anwesenheit eintragen</h6>
+    <h5 [align]="'center'" style="font-weight: bold">
+      Neue Anwesenheit eintragen
+    </h5>
     <div class="flex justify-content-around align-items-end">
       <div>
         <label for="dropdown" class="font-bold block mb-2">Benutzer</label>
@@ -26,7 +28,9 @@
   </div>
   <hr class="mt-4 mb-4" />
   <div class="mt-4">
-    <h6>Liste aller Anwesenheiten</h6>
+    <h5 [align]="'center'" style="font-weight: bold">
+      Liste aller Anwesenheiten
+    </h5>
     <p-table
       [value]="attandences"
       styleClass="p-datatable-striped"
