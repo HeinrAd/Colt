@@ -1,17 +1,25 @@
 <div class="p-2">
   <div>
-    <h6>Neue Anwesenheit eintragen</h6>
+    <h6 class="font-bold" style="text-decoration: underline">
+      Neue Anwesenheit eintragen
+    </h6>
     <div class="flex">
-      <p-dropdown placeholder="Benutzer" [style]="{ 'min-width': '20rem' }" />
-      <p-calendar
-        [ngModel]="selectedDate()"
-        dateFormat="dd.mm.yy"
-        [showIcon]="true"
-        placeholder="Datum wählen"
-        [showButtonBar]="true"
-        class="SelectorButton ml-3"
-      />
-      <p-button label="Speichern" class="ml-3" />
+      <div>
+        <label for="dropdown" class="font-bold block mb-2">Benutzer</label>
+        <p-dropdown inputId="dropdown" [style]="{ 'min-width': '20rem' }" />
+      </div>
+      <div class="ml-3">
+        <label for="calender" class="font-bold block mb-2">Datum</label>
+        <p-calendar
+          inputId="calender"
+          [ngModel]="selectedDate()"
+          dateFormat="dd.mm.yy"
+          [showButtonBar]="true"
+          [iconDisplay]="'input'"
+          [showIcon]="true"
+        />
+      </div>
+      <p-button label="Speichern" class="ml-3" (onClick)="saveAttendance()" />
     </div>
   </div>
   <div class="mt-4">
