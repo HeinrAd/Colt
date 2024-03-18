@@ -61,13 +61,13 @@ def read_user(user_id: int, db: Session = Depends(get_db)):
     return db_user
 
 
-@app.get("/attendances/", response_model=list[schemas.Attendance])
+@app.get("/attendances/", response_model=list[schemas.AttendanceUser])
 def read_attendences(skip: int = 0, limit: int = 100, db: Session = Depends(get_db)):
     attendences = crud.get_attendences(db, skip=skip, limit=limit)
     return attendences
 
 
-@app.get("/attendances/{attendance_id}", response_model=schemas.Attendance)
+@app.get("/attendances/{attendance_id}", response_model=schemas.AttendanceUser)
 def read_attendance(attendance_id: int, db: Session = Depends(get_db)):
     attendance = crud.get_attendance_by_id(db, attendance_id)
     if not attendance:
@@ -75,7 +75,7 @@ def read_attendance(attendance_id: int, db: Session = Depends(get_db)):
     return attendance
 
 
-@app.get("/attendances/{user_id}", response_model=list[schemas.Attendance])
+@app.get("/attendances/{user_id}", response_model=list[schemas.AttendanceUser])
 def get_attendances_by_user_id(user_id: int, db: Session = Depends(get_db)):
     attendances = crud.get_attendances_by_user_id(db, user_id)
     if not attendances:
@@ -83,6 +83,11 @@ def get_attendances_by_user_id(user_id: int, db: Session = Depends(get_db)):
             status_code=404, detail="No attendances found for the user")
     return attendances
 
+
+@app.get("/departments/", response_model=list[schemas.DepartmentUsers])
+def read_departments(skip: int = 0, limit: int = 100, db: Session = Depends(get_db)):
+    departments = crud.get_departments(db, skip=skip, limit=limit)
+    return departments
 
 @app.get("/departments/{department_id}", response_model=schemas.Department)
 def read_department(department_id: int, db: Session = Depends(get_db)):
