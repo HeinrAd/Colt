@@ -1,1 +1,59 @@
-<p>attendances works!</p>
+<div>
+  <div>
+    <h5 [align]="'center'" style="font-weight: bold">
+      Neue Anwesenheit eintragen
+    </h5>
+    <div class="flex justify-content-around align-items-end">
+      <div>
+        <label for="dropdown" class="font-bold block mb-2">Benutzer</label>
+        <p-dropdown inputId="dropdown" [style]="{ 'min-width': '25rem' }" />
+      </div>
+      <div class="ml-3" [style]="{ 'min-width': '106px' }">
+        <label for="calender" class="font-bold block mb-2">Datum</label>
+        <p-calendar
+          inputId="calender"
+          [formControl]="selectedDate"
+          dateFormat="dd.mm.yy"
+          [iconDisplay]="'input'"
+          [showIcon]="true"
+        />
+      </div>
+      <p-button
+        label="Eintragen"
+        class="ml-3"
+        severity="success"
+        (onClick)="saveAttendance()"
+      />
+    </div>
+  </div>
+  <hr class="mt-4 mb-4" />
+  <div class="mt-4">
+    <h5 [align]="'center'" style="font-weight: bold">
+      Liste aller Anwesenheiten
+    </h5>
+    <p-table
+      [value]="attandences"
+      styleClass="p-datatable-striped"
+      [paginator]="true"
+      [rows]="10"
+      [rowsPerPageOptions]="[10, 20, 50]"
+    >
+      <ng-template pTemplate="header">
+        <tr>
+          <th pSortableColumn="user_id">Name <p-sortIcon field="user_id" /></th>
+          <th pSortableColumn="date">Tag <p-sortIcon field="date" /></th>
+          <th pSortableColumn="department_id">
+            Abteilung <p-sortIcon field="department_id" />
+          </th>
+        </tr>
+      </ng-template>
+      <ng-template pTemplate="body" let-attandence>
+        <tr>
+          <th>{{ attandence.user_id }}</th>
+          <th>{{ attandence.date }}</th>
+          <th>{{ attandence.department_id }}</th>
+        </tr>
+      </ng-template>
+    </p-table>
+  </div>
+</div>
