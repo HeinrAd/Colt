@@ -1,18 +1,17 @@
 <div>
   <div>
     <h6>Neue Anwesenheit eintragen</h6>
-    <div class="flex">
+    <div class="flex justify-content-around align-items-end">
       <div>
         <label for="dropdown" class="font-bold block mb-2">Benutzer</label>
-        <p-dropdown inputId="dropdown" [style]="{ 'min-width': '20rem' }" />
+        <p-dropdown inputId="dropdown" [style]="{ 'min-width': '25rem' }" />
       </div>
       <div class="ml-3" [style]="{ 'min-width': '106px' }">
         <label for="calender" class="font-bold block mb-2">Datum</label>
         <p-calendar
           inputId="calender"
-          [ngModel]="selectedDate()"
+          [formControl]="selectedDate"
           dateFormat="dd.mm.yy"
-          [showButtonBar]="true"
           [iconDisplay]="'input'"
           [showIcon]="true"
         />
@@ -20,7 +19,7 @@
       <p-button
         label="Eintragen"
         class="ml-3"
-        [style]="{ height: '4rem' }"
+        severity="success"
         (onClick)="saveAttendance()"
       />
     </div>

@@ -9,7 +9,7 @@ import { TableModule } from 'primeng/table';
 import { DropdownModule } from 'primeng/dropdown';
 import { Attendance, Department, User } from '../shared';
 import { CalendarModule } from 'primeng/calendar';
-import { FormsModule } from '@angular/forms';
+import { FormControl, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { ButtonModule } from 'primeng/button';
 import { CommonModule } from '@angular/common';
 import { PrimeNGConfig } from 'primeng/api';
@@ -22,7 +22,7 @@ import { PrimeNGConfig } from 'primeng/api';
     TableModule,
     DropdownModule,
     CalendarModule,
-    FormsModule,
+    ReactiveFormsModule,
     ButtonModule,
   ],
   templateUrl: './attendances.component.html',
@@ -38,12 +38,12 @@ export class AttendancesComponent implements OnInit {
   attandences!: Attendance[];
   departments!: Department[];
   users!: User[];
-  selectedDate = signal<Date | null>(null);
+  selectedDate = new FormControl<Date | null>(null);
   currentDate!: Date;
 
   ngOnInit(): void {
     this.currentDate = new Date();
-    this.selectedDate.set(this.currentDate);
+    this.selectedDate.setValue(this.currentDate);
 
     this.attandences = [
       {
@@ -181,6 +181,6 @@ export class AttendancesComponent implements OnInit {
   }
 
   saveAttendance(): void {
-    console.log(this.selectedDate);
+    console.log(this.selectedDate.getRawValue());
   }
 }
