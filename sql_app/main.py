@@ -21,7 +21,6 @@ def get_db():
 
 # Create operation routes
 
-
 @app.post("/users/", response_model=schemas.User)
 def create_user(user: schemas.UserCreate, db: Session = Depends(get_db)):
     db_user = crud.get_user_by_email(db, email=user.email)
@@ -84,7 +83,7 @@ def get_attendances_by_user_id(user_id: int, db: Session = Depends(get_db)):
     return attendances
 
 
-@app.get("/departments/", response_model=list[schemas.DepartmentUsers])
+@app.get("/departments/", response_model=list[schemas.Department])
 def read_departments(skip: int = 0, limit: int = 100, db: Session = Depends(get_db)):
     departments = crud.get_departments(db, skip=skip, limit=limit)
     return departments

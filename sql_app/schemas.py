@@ -138,8 +138,8 @@ class UserUpdate(UserBase):
     postcode: int
     city: str
 
-class DepartmentUsers(Department):
-    users: list[UserShow]
+# class DepartmentUsers(Department):
+#     users: list[UserShow]
 
 class AttendanceUser(Attendance):
     user: UserShow

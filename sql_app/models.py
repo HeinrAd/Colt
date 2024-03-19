@@ -42,8 +42,6 @@ class Department(Base):
     description = Column(String, index=True)
     price = Column(Integer, nullable=False)
 
-    users = relationship("user_departments", )
-
 class User_Department(Base):
     __tablename__ = "user_departments"
 
