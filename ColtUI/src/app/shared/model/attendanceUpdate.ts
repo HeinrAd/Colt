@@ -13,7 +13,7 @@
 
 export interface AttendanceUpdate { 
     date: string;
-    month: string;
+    id: number;
     department_id: number;
 }
 

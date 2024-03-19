@@ -11,9 +11,6 @@
  */
 
 
-export interface UserDepartment { 
-    user_id: number;
-    department_id: number;
-    id: number;
+export interface Departments { 
 }
 

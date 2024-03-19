@@ -35,15 +35,13 @@ import { DepartmentCreate } from '../model/departmentCreate';
 // @ts-ignore
 import { DepartmentUpdate } from '../model/departmentUpdate';
 // @ts-ignore
+import { DepartmentUsers } from '../model/departmentUsers';
+// @ts-ignore
 import { HTTPValidationError } from '../model/hTTPValidationError';
 // @ts-ignore
 import { User } from '../model/user';
 // @ts-ignore
 import { UserCreate } from '../model/userCreate';
-// @ts-ignore
-import { UserDepartment } from '../model/userDepartment';
-// @ts-ignore
-import { UserDepartmentCreate } from '../model/userDepartmentCreate';
 // @ts-ignore
 import { UserDepartmentUpdate } from '../model/userDepartmentUpdate';
 // @ts-ignore
@@ -343,16 +341,20 @@ export class DefaultService {
 
     /**
      * Create User Department
-     * @param userDepartmentCreate 
+     * @param userId 
+     * @param departmentId 
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public createUserDepartment(userDepartmentCreate: UserDepartmentCreate, observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext, transferCache?: boolean}): Observable<UserDepartment>;
-    public createUserDepartment(userDepartmentCreate: UserDepartmentCreate, observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext, transferCache?: boolean}): Observable<HttpResponse<UserDepartment>>;
-    public createUserDepartment(userDepartmentCreate: UserDepartmentCreate, observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext, transferCache?: boolean}): Observable<HttpEvent<UserDepartment>>;
-    public createUserDepartment(userDepartmentCreate: UserDepartmentCreate, observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext, transferCache?: boolean}): Observable<any> {
-        if (userDepartmentCreate === null || userDepartmentCreate === undefined) {
-            throw new Error('Required parameter userDepartmentCreate was null or undefined when calling createUserDepartment.');
+    public createUserDepartment(userId: number, departmentId: number, observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext, transferCache?: boolean}): Observable<any>;
+    public createUserDepartment(userId: number, departmentId: number, observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext, transferCache?: boolean}): Observable<HttpResponse<any>>;
+    public createUserDepartment(userId: number, departmentId: number, observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext, transferCache?: boolean}): Observable<HttpEvent<any>>;
+    public createUserDepartment(userId: number, departmentId: number, observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext, transferCache?: boolean}): Observable<any> {
+        if (userId === null || userId === undefined) {
+            throw new Error('Required parameter userId was null or undefined when calling createUserDepartment.');
+        }
+        if (departmentId === null || departmentId === undefined) {
+            throw new Error('Required parameter departmentId was null or undefined when calling createUserDepartment.');
         }
 
         let localVarHeaders = this.defaultHeaders;
@@ -380,15 +382,6 @@ export class DefaultService {
         }
 
 
-        // to determine the Content-Type header
-        const consumes: string[] = [
-            'application/json'
-        ];
-        const httpContentTypeSelected: string | undefined = this.configuration.selectHeaderContentType(consumes);
-        if (httpContentTypeSelected !== undefined) {
-            localVarHeaders = localVarHeaders.set('Content-Type', httpContentTypeSelected);
-        }
-
         let responseType_: 'text' | 'json' | 'blob' = 'json';
         if (localVarHttpHeaderAcceptSelected) {
             if (localVarHttpHeaderAcceptSelected.startsWith('text')) {
@@ -400,11 +393,10 @@ export class DefaultService {
             }
         }
 
-        let localVarPath = `/user_departments/`;
-        return this.httpClient.request<UserDepartment>('post', `${this.configuration.basePath}${localVarPath}`,
+        let localVarPath = `/users/${this.configuration.encodeParam({name: "userId", value: userId, in: "path", style: "simple", explode: false, dataType: "number", dataFormat: undefined})}/departments/${this.configuration.encodeParam({name: "departmentId", value: departmentId, in: "path", style: "simple", explode: false, dataType: "number", dataFormat: undefined})}`;
+        return this.httpClient.request<any>('post', `${this.configuration.basePath}${localVarPath}`,
             {
                 context: localVarHttpContext,
-                body: userDepartmentCreate,
                 responseType: <any>responseType_,
                 withCredentials: this.configuration.withCredentials,
                 headers: localVarHeaders,
@@ -609,16 +601,20 @@ export class DefaultService {
 
     /**
      * Delete User Department
-     * @param userDepartmentId 
+     * @param userId 
+     * @param departmentId 
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public deleteUserDepartment(userDepartmentId: number, observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext, transferCache?: boolean}): Observable<DeleteResponse>;
-    public deleteUserDepartment(userDepartmentId: number, observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext, transferCache?: boolean}): Observable<HttpResponse<DeleteResponse>>;
-    public deleteUserDepartment(userDepartmentId: number, observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext, transferCache?: boolean}): Observable<HttpEvent<DeleteResponse>>;
-    public deleteUserDepartment(userDepartmentId: number, observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext, transferCache?: boolean}): Observable<any> {
-        if (userDepartmentId === null || userDepartmentId === undefined) {
-            throw new Error('Required parameter userDepartmentId was null or undefined when calling deleteUserDepartment.');
+    public deleteUserDepartment(userId: number, departmentId: number, observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext, transferCache?: boolean}): Observable<any>;
+    public deleteUserDepartment(userId: number, departmentId: number, observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext, transferCache?: boolean}): Observable<HttpResponse<any>>;
+    public deleteUserDepartment(userId: number, departmentId: number, observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext, transferCache?: boolean}): Observable<HttpEvent<any>>;
+    public deleteUserDepartment(userId: number, departmentId: number, observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext, transferCache?: boolean}): Observable<any> {
+        if (userId === null || userId === undefined) {
+            throw new Error('Required parameter userId was null or undefined when calling deleteUserDepartment.');
+        }
+        if (departmentId === null || departmentId === undefined) {
+            throw new Error('Required parameter departmentId was null or undefined when calling deleteUserDepartment.');
         }
 
         let localVarHeaders = this.defaultHeaders;
@@ -657,8 +653,8 @@ export class DefaultService {
             }
         }
 
-        let localVarPath = `/user_departments/${this.configuration.encodeParam({name: "userDepartmentId", value: userDepartmentId, in: "path", style: "simple", explode: false, dataType: "number", dataFormat: undefined})}`;
-        return this.httpClient.request<DeleteResponse>('delete', `${this.configuration.basePath}${localVarPath}`,
+        let localVarPath = `/users/${this.configuration.encodeParam({name: "userId", value: userId, in: "path", style: "simple", explode: false, dataType: "number", dataFormat: undefined})}/departments/${this.configuration.encodeParam({name: "departmentId", value: departmentId, in: "path", style: "simple", explode: false, dataType: "number", dataFormat: undefined})}`;
+        return this.httpClient.request<any>('delete', `${this.configuration.basePath}${localVarPath}`,
             {
                 context: localVarHttpContext,
                 responseType: <any>responseType_,
@@ -878,9 +874,9 @@ export class DefaultService {
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public readDepartment(departmentId: number, observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext, transferCache?: boolean}): Observable<Department>;
-    public readDepartment(departmentId: number, observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext, transferCache?: boolean}): Observable<HttpResponse<Department>>;
-    public readDepartment(departmentId: number, observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext, transferCache?: boolean}): Observable<HttpEvent<Department>>;
+    public readDepartment(departmentId: number, observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext, transferCache?: boolean}): Observable<DepartmentUsers>;
+    public readDepartment(departmentId: number, observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext, transferCache?: boolean}): Observable<HttpResponse<DepartmentUsers>>;
+    public readDepartment(departmentId: number, observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext, transferCache?: boolean}): Observable<HttpEvent<DepartmentUsers>>;
     public readDepartment(departmentId: number, observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext, transferCache?: boolean}): Observable<any> {
         if (departmentId === null || departmentId === undefined) {
             throw new Error('Required parameter departmentId was null or undefined when calling readDepartment.');
@@ -923,7 +919,7 @@ export class DefaultService {
         }
 
         let localVarPath = `/departments/${this.configuration.encodeParam({name: "departmentId", value: departmentId, in: "path", style: "simple", explode: false, dataType: "number", dataFormat: undefined})}`;
-        return this.httpClient.request<Department>('get', `${this.configuration.basePath}${localVarPath}`,
+        return this.httpClient.request<DepartmentUsers>('get', `${this.configuration.basePath}${localVarPath}`,
             {
                 context: localVarHttpContext,
                 responseType: <any>responseType_,
@@ -1074,17 +1070,17 @@ export class DefaultService {
     }
 
     /**
-     * Read User Department
-     * @param userDepartmentId 
+     * Read User Departments
+     * @param userId 
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public readUserDepartment(userDepartmentId: number, observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext, transferCache?: boolean}): Observable<UserDepartment>;
-    public readUserDepartment(userDepartmentId: number, observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext, transferCache?: boolean}): Observable<HttpResponse<UserDepartment>>;
-    public readUserDepartment(userDepartmentId: number, observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext, transferCache?: boolean}): Observable<HttpEvent<UserDepartment>>;
-    public readUserDepartment(userDepartmentId: number, observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext, transferCache?: boolean}): Observable<any> {
-        if (userDepartmentId === null || userDepartmentId === undefined) {
-            throw new Error('Required parameter userDepartmentId was null or undefined when calling readUserDepartment.');
+    public readUserDepartments(userId: number, observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext, transferCache?: boolean}): Observable<Array<Department>>;
+    public readUserDepartments(userId: number, observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext, transferCache?: boolean}): Observable<HttpResponse<Array<Department>>>;
+    public readUserDepartments(userId: number, observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext, transferCache?: boolean}): Observable<HttpEvent<Array<Department>>>;
+    public readUserDepartments(userId: number, observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext, transferCache?: boolean}): Observable<any> {
+        if (userId === null || userId === undefined) {
+            throw new Error('Required parameter userId was null or undefined when calling readUserDepartments.');
         }
 
         let localVarHeaders = this.defaultHeaders;
@@ -1123,8 +1119,8 @@ export class DefaultService {
             }
         }
 
-        let localVarPath = `/user_departments/${this.configuration.encodeParam({name: "userDepartmentId", value: userDepartmentId, in: "path", style: "simple", explode: false, dataType: "number", dataFormat: undefined})}`;
-        return this.httpClient.request<UserDepartment>('get', `${this.configuration.basePath}${localVarPath}`,
+        let localVarPath = `/users/${this.configuration.encodeParam({name: "userId", value: userId, in: "path", style: "simple", explode: false, dataType: "number", dataFormat: undefined})}/departments/`;
+        return this.httpClient.request<Array<Department>>('get', `${this.configuration.basePath}${localVarPath}`,
             {
                 context: localVarHttpContext,
                 responseType: <any>responseType_,
@@ -1446,17 +1442,21 @@ export class DefaultService {
 
     /**
      * Update User Department
-     * @param userDepartmentId 
+     * @param userId 
+     * @param departmentId 
      * @param userDepartmentUpdate 
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public updateUserDepartment(userDepartmentId: number, userDepartmentUpdate: UserDepartmentUpdate, observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext, transferCache?: boolean}): Observable<UserDepartment>;
-    public updateUserDepartment(userDepartmentId: number, userDepartmentUpdate: UserDepartmentUpdate, observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext, transferCache?: boolean}): Observable<HttpResponse<UserDepartment>>;
-    public updateUserDepartment(userDepartmentId: number, userDepartmentUpdate: UserDepartmentUpdate, observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext, transferCache?: boolean}): Observable<HttpEvent<UserDepartment>>;
-    public updateUserDepartment(userDepartmentId: number, userDepartmentUpdate: UserDepartmentUpdate, observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext, transferCache?: boolean}): Observable<any> {
-        if (userDepartmentId === null || userDepartmentId === undefined) {
-            throw new Error('Required parameter userDepartmentId was null or undefined when calling updateUserDepartment.');
+    public updateUserDepartment(userId: number, departmentId: number, userDepartmentUpdate: UserDepartmentUpdate, observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext, transferCache?: boolean}): Observable<Department>;
+    public updateUserDepartment(userId: number, departmentId: number, userDepartmentUpdate: UserDepartmentUpdate, observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext, transferCache?: boolean}): Observable<HttpResponse<Department>>;
+    public updateUserDepartment(userId: number, departmentId: number, userDepartmentUpdate: UserDepartmentUpdate, observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext, transferCache?: boolean}): Observable<HttpEvent<Department>>;
+    public updateUserDepartment(userId: number, departmentId: number, userDepartmentUpdate: UserDepartmentUpdate, observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext, transferCache?: boolean}): Observable<any> {
+        if (userId === null || userId === undefined) {
+            throw new Error('Required parameter userId was null or undefined when calling updateUserDepartment.');
+        }
+        if (departmentId === null || departmentId === undefined) {
+            throw new Error('Required parameter departmentId was null or undefined when calling updateUserDepartment.');
         }
         if (userDepartmentUpdate === null || userDepartmentUpdate === undefined) {
             throw new Error('Required parameter userDepartmentUpdate was null or undefined when calling updateUserDepartment.');
@@ -1507,8 +1507,8 @@ export class DefaultService {
             }
         }
 
-        let localVarPath = `/user_departments/${this.configuration.encodeParam({name: "userDepartmentId", value: userDepartmentId, in: "path", style: "simple", explode: false, dataType: "number", dataFormat: undefined})}`;
-        return this.httpClient.request<UserDepartment>('put', `${this.configuration.basePath}${localVarPath}`,
+        let localVarPath = `/users/${this.configuration.encodeParam({name: "userId", value: userId, in: "path", style: "simple", explode: false, dataType: "number", dataFormat: undefined})}/departments/${this.configuration.encodeParam({name: "departmentId", value: departmentId, in: "path", style: "simple", explode: false, dataType: "number", dataFormat: undefined})}`;
+        return this.httpClient.request<Department>('put', `${this.configuration.basePath}${localVarPath}`,
             {
                 context: localVarHttpContext,
                 body: userDepartmentUpdate,
