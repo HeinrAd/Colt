@@ -19,6 +19,8 @@ class User(Base):
     can_buy = Column(Boolean, default=False)
     is_active = Column(Boolean, default=True)
 
+    attendances = relationship("Attendance", back_populates="user")
+
 
 class Attendance(Base):
     __tablename__ = "attendances"
@@ -29,6 +31,8 @@ class Attendance(Base):
     month = Column(Integer, nullable=False)
     department_id = Column(Integer, ForeignKey("departments.id"))
 
+    department = relationship("Department")
+    user = relationship("User", back_populates="attendances")
 
 class Department(Base):
     __tablename__ = "departments"
@@ -38,10 +42,11 @@ class Department(Base):
     description = Column(String, index=True)
     price = Column(Integer, nullable=False)
 
-
 class User_Department(Base):
     __tablename__ = "user_departments"
 
     id = Column(Integer, primary_key=True)
     user_id = Column(Integer, ForeignKey("users.id"))
     department_id = Column(Integer, ForeignKey("departments.id"))
+
+    department = relationship("Department")

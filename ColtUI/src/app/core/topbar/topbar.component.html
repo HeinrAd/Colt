@@ -1,7 +1,32 @@
-<div class="flex justify-content-center">
-  <img
-    src="../../../assets/images/Colt_Logo_transparent.png"
-    height="100rem"
-    alt="Colt"
-  />
-</div>
+<p-toolbar [style]="{ padding: '0.75rem' }">
+  <div class="p-toolbar-group-start">
+    <img
+      src="../../../assets/images/Colt_Logo_transparent.png"
+      height="45rem"
+      alt="Colt"
+    />
+    <p-button
+      label="Mitglieder"
+      [styleClass]="'p-button-text'"
+      severity="secondary"
+      icon="pi pi-user"
+      class="ml-5 mr-2"
+      routerLink="/mitglieder"
+    />
+    <p-button
+      label="Anwesenheiten"
+      [styleClass]="'p-button-text'"
+      severity="secondary"
+      icon="pi pi-calendar"
+      routerLink="/anwesenheiten"
+      class="mr-2"
+    />
+    <p-button
+      label="Abteilungen"
+      [styleClass]="'p-button-text'"
+      severity="secondary"
+      icon="pi pi-building"
+      routerLink="/abteilungen"
+    />
+  </div>
+</p-toolbar>

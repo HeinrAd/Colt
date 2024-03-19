@@ -1,55 +1,5 @@
 from pydantic import BaseModel
 
-
-class UserBase(BaseModel):
-    email: str
-
-
-class UserCreate(UserBase):
-    first_name: str
-    last_name: str
-    birthday: str
-    street: str
-    house_number: int
-    postcode: int
-    city: str
-
-
-class User(UserBase):
-    id: int
-    first_name: str
-    last_name: str
-    birthday: str
-    street: str
-    house_number: int
-    postcode: int
-    city: str
-    is_active: bool
-    can_buy: bool
-
-    class Config:
-        orm_mode = True
-
-
-class UserDelete(UserBase):
-    id: int
-
-
-class DeleteResponse(BaseModel):
-    message: str
-
-
-class UserUpdate(UserBase):
-    email: str
-    first_name: str
-    last_name: str
-    birthday: str
-    street: str
-    house_number: int
-    postcode: int
-    city: str
-
-
 class DepartmentBase(BaseModel):
     title: str
     description: str
@@ -83,18 +33,13 @@ class DepartmentDelete(DepartmentBase):
 
 
 class AttendanceBase(BaseModel):
-    user_id: int
     date: str
-    month: str
-    department_id: int
 
 
 class Attendance(AttendanceBase):
     id: int
-    user_id: int
-    date: str
-    month: str
-    department_id: int
+    date: str   
+    department: Department
 
     class Config:
         orm_mode = True
@@ -143,3 +88,58 @@ class UserDepartmentUpdate(UserDepartmentBase):
 
 class UserDepartmentDelete(UserDepartmentBase):
     id: int
+
+class UserBase(BaseModel):
+    email: str
+
+class UserCreate(UserBase):
+    first_name: str
+    last_name: str
+    birthday: str
+    street: str
+    house_number: int
+    postcode: int
+    city: str
+
+class User(UserBase):
+    id: int
+    first_name: str
+    last_name: str
+    birthday: str
+    street: str
+    house_number: int
+    postcode: int
+    city: str
+    is_active: bool
+    can_buy: bool
+    attendances: list[Attendance]
+
+    class Config:
+        orm_mode = True
+
+class UserShow(UserBase):
+    id: int
+    first_name: str
+    last_name: str
+
+class UserDelete(UserBase):
+    id: int
+
+class DeleteResponse(BaseModel):
+    message: str
+
+class UserUpdate(UserBase):
+    email: str
+    first_name: str
+    last_name: str
+    birthday: str
+    street: str
+    house_number: int
+    postcode: int
+    city: str
+
+# class DepartmentUsers(Department):
+#     users: list[UserShow]
+
+class AttendanceUser(Attendance):
+    user: UserShow
