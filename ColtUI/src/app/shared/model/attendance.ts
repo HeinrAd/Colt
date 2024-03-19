@@ -9,13 +9,12 @@
  * https://openapi-generator.tech
  * Do not edit the class manually.
  */
+import { Department } from './department';
 
 
 export interface Attendance { 
-    user_id: number;
     date: string;
-    month: string;
-    department_id: number;
     id: number;
+    department: Department;
 }
 
