@@ -1,8 +1,13 @@
-from sqlalchemy import Boolean, Column, Date, ForeignKey, Integer, String
+from sqlalchemy import Boolean, Column, Date, ForeignKey, Integer, String, Table
 from sqlalchemy.orm import relationship
 
 from .database import Base
 
+user_departments = Table(
+    'user_departments', Base.metadata,
+    Column('user_id', Integer, ForeignKey('users.id')),
+    Column('department_id', Integer, ForeignKey('departments.id'))
+)
 
 class User(Base):
     __tablename__ = "users"
@@ -19,6 +24,7 @@ class User(Base):
     can_buy = Column(Boolean, default=False)
     is_active = Column(Boolean, default=True)
 
+    departments = relationship("Department", secondary=user_departments, back_populates="users")
     attendances = relationship("Attendance", back_populates="user")
 
 
@@ -28,7 +34,6 @@ class Attendance(Base):
     id = Column(Integer, primary_key=True)
     user_id = Column(Integer, ForeignKey("users.id"))
     date = Column(String, nullable=False)
-    month = Column(Integer, nullable=False)
     department_id = Column(Integer, ForeignKey("departments.id"))
 
     department = relationship("Department")
@@ -42,11 +47,13 @@ class Department(Base):
     description = Column(String, index=True)
     price = Column(Integer, nullable=False)
 
-class User_Department(Base):
-    __tablename__ = "user_departments"
+    users = relationship("User", secondary=user_departments, back_populates="departments")
 
-    id = Column(Integer, primary_key=True)
-    user_id = Column(Integer, ForeignKey("users.id"))
-    department_id = Column(Integer, ForeignKey("departments.id"))
+# class User_Department(Base):
+#     __tablename__ = "user_departments"
 
-    department = relationship("Department")
+#     id = Column(Integer, primary_key=True)
+#     user_id = Column(Integer, ForeignKey("users.id"))
+#     department_id = Column(Integer, ForeignKey("departments.id"))
+
+#     department = relationship("Department")
