@@ -1,4 +1,5 @@
 from pydantic import BaseModel
+from typing import Optional
 
 class DepartmentBase(BaseModel):
     title: str
@@ -48,13 +49,12 @@ class Attendance(AttendanceBase):
 class AttendanceCreate(AttendanceBase):
     user_id: int
     date: str
-    month: str
     department_id: int
 
 
 class AttendanceUpdate(AttendanceBase):
+    id: int
     date: str
-    month: str
     department_id: int
 
 
@@ -69,8 +69,6 @@ class UserDepartmentBase(BaseModel):
 
 class UserDepartment(UserDepartmentBase):
     id: int
-    user_id: int
-    department_id: int
 
     class Config:
         orm_mode = True
@@ -113,6 +111,7 @@ class User(UserBase):
     is_active: bool
     can_buy: bool
     attendances: list[Attendance]
+    departments: Optional[list[Department]]
 
     class Config:
         orm_mode = True
@@ -138,8 +137,12 @@ class UserUpdate(UserBase):
     postcode: int
     city: str
 
-# class DepartmentUsers(Department):
-#     users: list[UserShow]
+class DepartmentUsers(Department):
+    users: list[UserShow]
 
 class AttendanceUser(Attendance):
     user: UserShow
+
+class UserDepartmentShow(UserDepartment):
+    user: UserShow
+    department: Department
