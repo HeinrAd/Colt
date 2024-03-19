@@ -142,18 +142,10 @@ def delete_department(department_id: int, db: Session = Depends(get_db)):
 
 ############################################# User Department #############################################
 # Create a user_department association
-@app.post("/users/{user_id}/departments/{department_id}", response_model=schemas.UserDepartment)
+@app.post("/users/{user_id}/departments/{department_id}")
 def create_user_department(user_id: int, department_id: int, db: Session = Depends(get_db)):
     user_department = schemas.UserDepartmentCreate(user_id=user_id, department_id=department_id)
     return crud.create_user_department(db=db, user_department=user_department)
-
-# Read a user_department association
-@app.get("/users/{user_id}/departments/{department_id}", response_model=schemas.UserDepartment)
-def read_user_department(user_id: int, department_id: int, db: Session = Depends(get_db)):
-    user_department = crud.get_user_department_by_ids(db=db, user_id=user_id, department_id=department_id)
-    if user_department is None:
-        raise HTTPException(status_code=404, detail="User Department association not found")
-    return user_department
 
 # Read a user_department association
 @app.get("/users/{user_id}/departments/", response_model=list[schemas.Department])
@@ -165,7 +157,7 @@ def read_user_departments(user_id: int, db: Session = Depends(get_db)):
     return user_department
 
 # Update a user_department association
-@app.put("/users/{user_id}/departments/{department_id}", response_model=schemas.UserDepartment)
+@app.put("/users/{user_id}/departments/{department_id}", response_model=schemas.Department)
 def update_user_department(user_id: int, department_id: int, user_department: schemas.UserDepartmentUpdate, db: Session = Depends(get_db)):
     updated_user_department = crud.update_user_department_by_ids(db=db, user_id=user_id, department_id=department_id, user_department=user_department)
     if updated_user_department is None:
@@ -175,7 +167,7 @@ def update_user_department(user_id: int, department_id: int, user_department: sc
 # Delete a user_department association
 @app.delete("/users/{user_id}/departments/{department_id}")
 def delete_user_department(user_id: int, department_id: int, db: Session = Depends(get_db)):
-    deleted = crud.delete_user_department_by_ids(db=db, user_id=user_id, department_id=department_id)
+    deleted = crud.delete_user_department(db=db, user_id=user_id, department_id=department_id)
     if not deleted:
         raise HTTPException(status_code=404, detail="User Department association not found")
     return {"message": "User Department association deleted successfully"}

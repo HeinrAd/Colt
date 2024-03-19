@@ -148,25 +148,12 @@ def create_user_department(db: Session, user_department: schemas.UserDepartmentC
     
     user = db.query(models.User).filter(models.User.id == user_id).first()
     if user:
-        print("yaho")
         department = db.query(models.Department).filter(models.Department.id == department_id).first()
         if department:
             stmt = models.user_departments.insert().values(user_id=user_id, department_id=department_id)
-            result = db.execute(stmt)
+            db.execute(stmt)
             db.commit()
-            print(result)
-            return result
-
-def read_user_department(db: Session, user_id: int, department_id: int):
-    user = db.query(models.User).filter(models.User.id == user_id).first()
-    if user:
-        department = db.query(models.Department).filter(models.Department.id == department_id).first()
-        if department:
-            stmt = select([models.user_departments]).where(models.user_departments.c.user_id == user_id).where(models.user_departments.c.department_id == department_id)
-            result = db.execute(stmt).first()
-            if result:
-                return result
-    return False
+            return user.departments
 
 def get_departments_for_user(db: Session, user_id: int):
     user = db.query(models.User).filter(models.User.id == user_id).first()
@@ -188,7 +175,7 @@ def update_user_department(db: Session, user_id: int, department_id: int, user_d
                 )
                 db.execute(update_stmt)
                 db.commit()
-                return user
+                return user.departments
     return False
 
 def delete_user_department(db: Session, user_id: int, department_id: int):
