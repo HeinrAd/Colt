@@ -18,6 +18,7 @@ import {
   DepartmentUpdate,
   User,
   UserCreate,
+  UserDepartment,
   UserUpdate,
 } from 'src/app/shared/';
 
@@ -27,6 +28,7 @@ export const GlobalStore = signalStore(
   withState({
     users: [] as User[],
     user: {} as User,
+    userDepartments: [] as UserDepartment[],
     attendances: [] as Attendance[],
     userAttendences: [] as Attendance[],
     attendance: {} as Attendance,
@@ -70,6 +72,14 @@ export const GlobalStore = signalStore(
         .getAttendancesByUserId(id)
         .subscribe((attendances) =>
           patchState(store, { userAttendences: attendances })
+        );
+    },
+
+    getUserDepartments(id: number): void {
+      defaultService
+        .readUserDepartment(id)
+        .subscribe((departments) =>
+          patchState(store, { userDepartments: [departments] })
         );
     },
     // getAttendanceById(id: number): void {},
