@@ -30,14 +30,12 @@ export const GlobalStore = signalStore(
     user: {} as User,
     userDepartments: [] as UserDepartment[],
     attendances: [] as Attendance[],
-    userAttendences: [] as Attendance[],
+    userAttendances: [] as Attendance[],
     attendance: {} as Attendance,
     departments: [] as Department[],
     department: {} as Department,
     isLoading: true as boolean,
   }),
-
-  withComputed((store) => ({})),
 
   withMethods((store, defaultService = inject(DefaultService)) => ({
     loadUsers(): void {
@@ -55,11 +53,11 @@ export const GlobalStore = signalStore(
         );
     },
     loadDepartments(): void {
-      // defaultService
-      //   .readDepartments()
-      //   .subscribe((newDepartments) =>
-      //     patchState(store, { departments: newDepartments, isLoading: false })
-      //   );
+      defaultService
+        .readDepartments()
+        .subscribe((newDepartments) =>
+          patchState(store, { departments: newDepartments, isLoading: false })
+        );
     },
 
     getUserById(id: number): void {
@@ -71,16 +69,16 @@ export const GlobalStore = signalStore(
       defaultService
         .getAttendancesByUserId(id)
         .subscribe((attendances) =>
-          patchState(store, { userAttendences: attendances })
+          patchState(store, { userAttendances: attendances })
         );
     },
 
     getUserDepartments(id: number): void {
-      defaultService
-        .readUserDepartment(id)
-        .subscribe((departments) =>
-          patchState(store, { userDepartments: [departments] })
-        );
+      // defaultService
+      //   .readUserDepartment(id)
+      //   .subscribe((departments) =>
+      //     patchState(store, { userDepartments: departments })
+      //   );
     },
     // getAttendanceById(id: number): void {},
 

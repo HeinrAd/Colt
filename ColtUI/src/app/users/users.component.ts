@@ -1,16 +1,27 @@
-import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
-import { DataViewModule } from 'primeng/dataview';
+import {
+  ChangeDetectionStrategy,
+  Component,
+  OnInit,
+  inject,
+} from '@angular/core';
 import { GlobalStore } from '../core/stores/global.store';
-import { CommonModule } from '@angular/common';
+import { LayoutComponent } from '../core/layout/layout.component';
+import { ReactiveFormsModule } from '@angular/forms';
 
 @Component({
   selector: 'app-users',
   standalone: true,
-  imports: [CommonModule, DataViewModule],
+  imports: [ReactiveFormsModule],
   templateUrl: './users.component.html',
   styleUrl: './users.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class UsersComponent {
-  store = inject(GlobalStore);
+export class UsersComponent implements OnInit {
+  constructor(private layoutComponent: LayoutComponent) {}
+
+  readonly store = inject(GlobalStore);
+
+  ngOnInit(): void {
+    this.layoutComponent.cardHeader = 'Mitglieder';
+  }
 }

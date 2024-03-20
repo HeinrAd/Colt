@@ -1,18 +1,2 @@
-<div class="card">
-  <p-dataView #dv [value]="store.users()">
-    <ng-template pTemplate="list" let-users>
-      <div class="grid grid-nogutter">
-        <div class="col-12" *ngFor="let user of users">
-          <div
-            class="flex flex-column align-items-center sm:align-items-start gap-3"
-          >
-            {{ user.first_name }} {{ user.last_name }}
-          </div>
-        </div>
-      </div>
-    </ng-template>
-  </p-dataView>
-</div>
-<div>
-  <p>{{ store.users()[0].birthday }}</p>
-</div>
+<p>Hallo</p>
+<div>{{ store.users()[0].email }}</div>

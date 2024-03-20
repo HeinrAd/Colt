@@ -12,7 +12,6 @@
 
 
 export interface AttendanceUpdate { 
-    user_id: number;
     date: string;
     month: string;
     department_id: number;

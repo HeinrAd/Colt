@@ -9,21 +9,12 @@
  * https://openapi-generator.tech
  * Do not edit the class manually.
  */
-import { Attendance } from './attendance';
 
 
-export interface User { 
+export interface UserShow { 
     email: string;
     id: number;
     first_name: string;
     last_name: string;
-    birthday: string;
-    street: string;
-    house_number: number;
-    postcode: number;
-    city: string;
-    is_active: boolean;
-    can_buy: boolean;
-    attendances: Array<Attendance>;
 }
 

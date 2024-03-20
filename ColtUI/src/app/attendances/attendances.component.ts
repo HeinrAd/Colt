@@ -9,10 +9,10 @@ import { TableModule } from 'primeng/table';
 import { DropdownModule } from 'primeng/dropdown';
 import { Attendance, Department, User } from '../shared';
 import { CalendarModule } from 'primeng/calendar';
-import { FormControl, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { ButtonModule } from 'primeng/button';
 import { CommonModule } from '@angular/common';
 import { PrimeNGConfig } from 'primeng/api';
+import { FormControl, ReactiveFormsModule } from '@angular/forms';
 
 @Component({
   selector: 'app-attendances',
@@ -48,90 +48,90 @@ export class AttendancesComponent implements OnInit {
     this.selectedDate.setValue(this.currentDate);
 
     this.attandences = [
-      {
-        user_id: 1,
-        date: '13.03.2024',
-        month: 'März',
-        department_id: 1,
-        id: 1,
-      },
-      {
-        user_id: 2,
-        date: '13.03.2024',
-        month: 'März',
-        department_id: 1,
-        id: 2,
-      },
-      {
-        user_id: 3,
-        date: '13.03.2024',
-        month: 'März',
-        department_id: 1,
-        id: 3,
-      },
-      {
-        user_id: 4,
-        date: '13.03.2024',
-        month: 'März',
-        department_id: 1,
-        id: 4,
-      },
-      {
-        user_id: 5,
-        date: '13.03.2024',
-        month: 'März',
-        department_id: 1,
-        id: 5,
-      },
-      {
-        user_id: 6,
-        date: '13.03.2024',
-        month: 'März',
-        department_id: 1,
-        id: 6,
-      },
-      {
-        user_id: 7,
-        date: '13.03.2024',
-        month: 'März',
-        department_id: 1,
-        id: 7,
-      },
-      {
-        user_id: 8,
-        date: '13.03.2024',
-        month: 'März',
-        department_id: 1,
-        id: 8,
-      },
-      {
-        user_id: 9,
-        date: '13.03.2024',
-        month: 'März',
-        department_id: 1,
-        id: 9,
-      },
-      {
-        user_id: 10,
-        date: '13.03.2024',
-        month: 'März',
-        department_id: 1,
-        id: 10,
-      },
-      {
-        user_id: 11,
-        date: '13.03.2024',
-        month: 'März',
-        department_id: 1,
-        id: 11,
-      },
-      {
-        user_id: 12,
-        date: '13.03.2024',
-        month: 'März',
-        department_id: 1,
-        id: 12,
-      },
+      // {
+      //   user_id: 1,
+      //   date: '13.03.2024',
+      //   month: 'März',
+      //   department_id: 1,
+      //   id: 1,
+      // },
+      // {
+      //   user_id: 2,
+      //   date: '13.03.2024',
+      //   month: 'März',
+      //   department_id: 1,
+      //   id: 2,
+      // },
+      // {
+      //   user_id: 3,
+      //   date: '13.03.2024',
+      //   month: 'März',
+      //   department_id: 1,
+      //   id: 3,
+      // },
+      // {
+      //   user_id: 4,
+      //   date: '13.03.2024',
+      //   month: 'März',
+      //   department_id: 1,
+      //   id: 4,
+      // },
+      // {
+      //   user_id: 5,
+      //   date: '13.03.2024',
+      //   month: 'März',
+      //   department_id: 1,
+      //   id: 5,
+      // },
+      // {
+      //   user_id: 6,
+      //   date: '13.03.2024',
+      //   month: 'März',
+      //   department_id: 1,
+      //   id: 6,
+      // },
+      // {
+      //   user_id: 7,
+      //   date: '13.03.2024',
+      //   month: 'März',
+      //   department_id: 1,
+      //   id: 7,
+      // },
+      // {
+      //   user_id: 8,
+      //   date: '13.03.2024',
+      //   month: 'März',
+      //   department_id: 1,
+      //   id: 8,
+      // },
+      // {
+      //   user_id: 9,
+      //   date: '13.03.2024',
+      //   month: 'März',
+      //   department_id: 1,
+      //   id: 9,
+      // },
+      // {
+      //   user_id: 10,
+      //   date: '13.03.2024',
+      //   month: 'März',
+      //   department_id: 1,
+      //   id: 10,
+      // },
+      // {
+      //   user_id: 11,
+      //   date: '13.03.2024',
+      //   month: 'März',
+      //   department_id: 1,
+      //   id: 11,
+      // },
+      // {
+      //   user_id: 12,
+      //   date: '13.03.2024',
+      //   month: 'März',
+      //   department_id: 1,
+      //   id: 12,
+      // },
     ];
 
     this.primengConfig.setTranslation({
