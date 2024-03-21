@@ -18,7 +18,6 @@ import {
   DepartmentUpdate,
   User,
   UserCreate,
-  UserDepartment,
   UserUpdate,
 } from 'src/app/shared/';
 
@@ -28,7 +27,6 @@ export const GlobalStore = signalStore(
   withState({
     users: [] as User[],
     user: {} as User,
-    userDepartments: [] as UserDepartment[],
     attendances: [] as Attendance[],
     userAttendances: [] as Attendance[],
     attendance: {} as Attendance,
