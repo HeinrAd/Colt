@@ -7,11 +7,13 @@ import {
 import { GlobalStore } from '../core/stores/global.store';
 import { LayoutComponent } from '../core/layout/layout.component';
 import { ReactiveFormsModule } from '@angular/forms';
+import { DataViewModule } from 'primeng/dataview';
+import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-users',
   standalone: true,
-  imports: [ReactiveFormsModule],
+  imports: [CommonModule, ReactiveFormsModule, DataViewModule],
   templateUrl: './users.component.html',
   styleUrl: './users.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,

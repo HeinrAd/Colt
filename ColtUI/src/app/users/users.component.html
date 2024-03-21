@@ -1,2 +1,12 @@
-<p>Hallo</p>
-<div>{{ store.users()[0].email }}</div>
+<p-dataView #dv [value]="store.users()">
+  <ng-template pTemplate="list" let-users>
+    <div class="grid grid-nogutter">
+      <div class="col-12" *ngFor="let user of users; let first = first">
+        <p>Vorname: {{ user.first_name }}</p>
+        <p>Nachname: {{ user.last_name }}</p>
+        <p>Email: {{ user.email }}</p>
+        <p>Geburtstag: {{ user.birthday }}</p>
+      </div>
+    </div>
+  </ng-template>
+</p-dataView>
