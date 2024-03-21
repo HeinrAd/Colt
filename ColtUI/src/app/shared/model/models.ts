@@ -1,6 +1,7 @@
 export * from './attendance';
 export * from './attendanceCreate';
 export * from './attendanceUpdate';
+export * from './attendanceUser';
 export * from './deleteResponse';
 export * from './department';
 export * from './departmentCreate';
@@ -11,6 +12,7 @@ export * from './userCreate';
 export * from './userDepartment';
 export * from './userDepartmentCreate';
 export * from './userDepartmentUpdate';
+export * from './userShow';
 export * from './userUpdate';
 export * from './validationError';
 export * from './validationErrorLocInner';
