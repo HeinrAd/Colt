@@ -7,7 +7,7 @@ import {
 import { LayoutComponent } from '../core/layout/layout.component';
 import { TableModule } from 'primeng/table';
 import { DropdownModule } from 'primeng/dropdown';
-import { Attendance, Department, User } from '../shared';
+import { Attendance, DefaultService, Department, User } from '../shared';
 import { CalendarModule } from 'primeng/calendar';
 import { FormControl, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { ButtonModule } from 'primeng/button';
@@ -32,7 +32,8 @@ import { PrimeNGConfig } from 'primeng/api';
 export class AttendancesComponent implements OnInit {
   constructor(
     private primengConfig: PrimeNGConfig,
-    private layoutComponent: LayoutComponent
+    private layoutComponent: LayoutComponent,
+    private defaultService: DefaultService
   ) {}
 
   attandences!: Attendance[];
@@ -46,93 +47,6 @@ export class AttendancesComponent implements OnInit {
 
     this.currentDate = new Date();
     this.selectedDate.setValue(this.currentDate);
-
-    this.attandences = [
-      {
-        user_id: 1,
-        date: '13.03.2024',
-        month: 'März',
-        department_id: 1,
-        id: 1,
-      },
-      {
-        user_id: 2,
-        date: '13.03.2024',
-        month: 'März',
-        department_id: 1,
-        id: 2,
-      },
-      {
-        user_id: 3,
-        date: '13.03.2024',
-        month: 'März',
-        department_id: 1,
-        id: 3,
-      },
-      {
-        user_id: 4,
-        date: '13.03.2024',
-        month: 'März',
-        department_id: 1,
-        id: 4,
-      },
-      {
-        user_id: 5,
-        date: '13.03.2024',
-        month: 'März',
-        department_id: 1,
-        id: 5,
-      },
-      {
-        user_id: 6,
-        date: '13.03.2024',
-        month: 'März',
-        department_id: 1,
-        id: 6,
-      },
-      {
-        user_id: 7,
-        date: '13.03.2024',
-        month: 'März',
-        department_id: 1,
-        id: 7,
-      },
-      {
-        user_id: 8,
-        date: '13.03.2024',
-        month: 'März',
-        department_id: 1,
-        id: 8,
-      },
-      {
-        user_id: 9,
-        date: '13.03.2024',
-        month: 'März',
-        department_id: 1,
-        id: 9,
-      },
-      {
-        user_id: 10,
-        date: '13.03.2024',
-        month: 'März',
-        department_id: 1,
-        id: 10,
-      },
-      {
-        user_id: 11,
-        date: '13.03.2024',
-        month: 'März',
-        department_id: 1,
-        id: 11,
-      },
-      {
-        user_id: 12,
-        date: '13.03.2024',
-        month: 'März',
-        department_id: 1,
-        id: 12,
-      },
-    ];
 
     this.primengConfig.setTranslation({
       firstDayOfWeek: 1,
