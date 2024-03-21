@@ -9,10 +9,10 @@ import { TableModule } from 'primeng/table';
 import { DropdownModule } from 'primeng/dropdown';
 import { Attendance, DefaultService, Department, User } from '../shared';
 import { CalendarModule } from 'primeng/calendar';
-import { FormControl, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { ButtonModule } from 'primeng/button';
 import { CommonModule } from '@angular/common';
 import { PrimeNGConfig } from 'primeng/api';
+import { FormControl, ReactiveFormsModule } from '@angular/forms';
 
 @Component({
   selector: 'app-attendances',
