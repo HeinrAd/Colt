@@ -16,7 +16,7 @@ class User(Base):
     first_name = Column(String, nullable=False)
     last_name = Column(String, nullable=False)
     email = Column(String, nullable=False, unique=True)
-    birthday = Column(String, nullable=False)
+    birthday = Column(Date, nullable=False)
     street = Column(String)
     house_number = Column(Integer)
     postcode = Column(Integer)
@@ -33,7 +33,7 @@ class Attendance(Base):
 
     id = Column(Integer, primary_key=True)
     user_id = Column(Integer, ForeignKey("users.id"))
-    date = Column(String, nullable=False)
+    date = Column(Date, nullable=False)
     department_id = Column(Integer, ForeignKey("departments.id"))
 
     department = relationship("Department")
