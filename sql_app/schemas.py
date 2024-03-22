@@ -111,7 +111,7 @@ class User(UserBase):
     is_active: bool
     can_buy: bool
     attendances: list[Attendance]
-    departments: Optional[list[Department]]
+    departments: list[Department]
 
     class Config:
         orm_mode = True
