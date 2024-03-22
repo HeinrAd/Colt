@@ -12,8 +12,8 @@
 
 
 export interface AttendanceCreate { 
-    user_id: number;
     date: string;
+    user_id: number;
     month: string;
     department_id: number;
 }

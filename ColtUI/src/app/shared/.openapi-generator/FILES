@@ -10,6 +10,7 @@ index.ts
 model/attendance.ts
 model/attendanceCreate.ts
 model/attendanceUpdate.ts
+model/attendanceUser.ts
 model/deleteResponse.ts
 model/department.ts
 model/departmentCreate.ts
@@ -21,6 +22,7 @@ model/userCreate.ts
 model/userDepartment.ts
 model/userDepartmentCreate.ts
 model/userDepartmentUpdate.ts
+model/userShow.ts
 model/userUpdate.ts
 model/validationError.ts
 model/validationErrorLocInner.ts

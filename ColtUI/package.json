@@ -3,11 +3,11 @@
   "version": "0.0.0",
   "scripts": {
     "ng": "ng",
-    "start": "ng serve",
+    "start": "ng serve --proxy-config proxy.config.json",
     "build": "ng build",
     "watch": "ng build --watch --configuration development",
     "test": "ng test",
-    "generate:api": "openapi-generator-cli generate -i http://127.0.0.1:8000/openapi.json -g typescript-angular -o src/app/shared --additional-properties=ngVersion=17.0.0 --skip-validate-spec"
+    "generate:api": "openapi-generator-cli generate -i http://127.0.0.1:8000/openapi.json -g typescript-angular -o src/app/shared --additional-properties=ngVersion=17.0.0,enumPropertyNaming=original,paramNaming=original,basePath= --skip-validate-spec"
   },
   "private": true,
   "dependencies": {
