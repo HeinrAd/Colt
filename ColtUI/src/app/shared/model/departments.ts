@@ -11,9 +11,6 @@
  */
 
 
-export interface AttendanceUpdate { 
-    date: string;
-    id: number;
-    department_id: number;
+export interface Departments { 
 }
 

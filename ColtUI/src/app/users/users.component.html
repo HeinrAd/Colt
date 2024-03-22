@@ -21,13 +21,20 @@
                   <i class="pi pi-database"> {{ user.birthday }}</i>
                   <span class="font-semibold"></span>
                 </span>
-                <p-tag [value]="user.is_active" [severity]=""></p-tag>
+                <div *ngIf="user.is_active; else inactive">
+                  <p-tag value="Aktiv" severity="success"></p-tag>
+                </div>
               </div>
+              <ng-template #inactive
+                ><p-tag value="Inaktiv" severity="danger"></p-tag
+              ></ng-template>
             </div>
-            <div
-              class="flex sm:flex-column align-items-center sm:align-items-end gap-3 sm:gap-2"
-            >
-              <span class="text-2xl font-semibold">{{ user.is_active }}</span>
+            <div class="ml-auto flex flex-column">
+              <p-button class="mb-2" label="Heute anwesend"></p-button>
+              <p-button
+                [styleClass]="'p-button-text'"
+                label="Details"
+              ></p-button>
             </div>
           </div>
         </div>

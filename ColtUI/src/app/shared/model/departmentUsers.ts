@@ -9,11 +9,14 @@
  * https://openapi-generator.tech
  * Do not edit the class manually.
  */
+import { UserShow } from './userShow';
 
 
-export interface AttendanceUpdate { 
-    date: string;
+export interface DepartmentUsers { 
+    title: string;
+    description: string;
+    price: number;
     id: number;
-    department_id: number;
+    users: Array<UserShow>;
 }
 
