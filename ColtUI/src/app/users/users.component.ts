@@ -32,6 +32,6 @@ export class UsersComponent implements OnInit {
   readonly store = inject(GlobalStore);
 
   ngOnInit(): void {
-    this.layoutComponent.cardHeader = 'Mitglieder';
+    this.layoutComponent.cardHeader.update(() => 'Mitglieder');
   }
 }
