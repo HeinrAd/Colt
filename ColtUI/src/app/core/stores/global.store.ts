@@ -63,20 +63,13 @@ export const GlobalStore = signalStore(
       patchState(store, { user: newUser });
     },
     // getDepartmentById(id: number): void {},
+
     getAttendancesByUserId(id: number): void {
       defaultService
         .getAttendancesByUserId(id)
         .subscribe((attendances) =>
           patchState(store, { userAttendances: attendances })
         );
-    },
-
-    getUserDepartments(id: number): void {
-      // defaultService
-      //   .readUserDepartment(id)
-      //   .subscribe((departments) =>
-      //     patchState(store, { userDepartments: departments })
-      //   );
     },
     // getAttendanceById(id: number): void {},
 
