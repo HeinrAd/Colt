@@ -1,4 +1,5 @@
 from pydantic import BaseModel
+from datetime import date, datetime, time, timedelta
 from typing import Optional
 
 class DepartmentBase(BaseModel):
@@ -34,12 +35,12 @@ class DepartmentDelete(DepartmentBase):
 
 
 class AttendanceBase(BaseModel):
-    date: str
+    date: datetime
 
 
 class Attendance(AttendanceBase):
     id: int
-    date: str   
+    date: datetime   
     department: Department
 
     class Config:
@@ -48,13 +49,13 @@ class Attendance(AttendanceBase):
 
 class AttendanceCreate(AttendanceBase):
     user_id: int
-    date: str
+    date: datetime
     department_id: int
 
 
 class AttendanceUpdate(AttendanceBase):
     id: int
-    date: str
+    date: datetime
     department_id: int
 
 
@@ -93,7 +94,7 @@ class UserBase(BaseModel):
 class UserCreate(UserBase):
     first_name: str
     last_name: str
-    birthday: str
+    birthday: datetime
     street: str
     house_number: int
     postcode: int
@@ -103,7 +104,7 @@ class User(UserBase):
     id: int
     first_name: str
     last_name: str
-    birthday: str
+    birthday: datetime
     street: str
     house_number: int
     postcode: int
@@ -111,7 +112,7 @@ class User(UserBase):
     is_active: bool
     can_buy: bool
     attendances: list[Attendance]
-    departments: Optional[list[Department]]
+    departments: list[Department]
 
     class Config:
         orm_mode = True
@@ -131,7 +132,7 @@ class UserUpdate(UserBase):
     email: str
     first_name: str
     last_name: str
-    birthday: str
+    birthday: datetime
     street: str
     house_number: int
     postcode: int

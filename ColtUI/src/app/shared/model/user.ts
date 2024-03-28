@@ -10,7 +10,7 @@
  * Do not edit the class manually.
  */
 import { Attendance } from './attendance';
-import { Departments } from './departments';
+import { Department } from './department';
 
 
 export interface User { 
@@ -26,6 +26,6 @@ export interface User {
     is_active: boolean;
     can_buy: boolean;
     attendances: Array<Attendance>;
-    departments: Departments;
+    departments: Array<Department>;
 }
 

@@ -51,7 +51,7 @@ export class AttendancesComponent implements OnInit {
   currentDate!: Date;
 
   ngOnInit(): void {
-    this.layoutComponent.cardHeader = 'Anwesenheiten';
+    this.layoutComponent.cardHeader.update(() => 'Anwesenheiten');
 
     this.currentDate = new Date();
     this.selectedDate.setValue(this.currentDate);
