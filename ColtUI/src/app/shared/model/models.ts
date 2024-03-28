@@ -7,6 +7,7 @@ export * from './department';
 export * from './departmentCreate';
 export * from './departmentUpdate';
 export * from './departmentUsers';
+export * from './departments';
 export * from './hTTPValidationError';
 export * from './user';
 export * from './userCreate';
