@@ -7,6 +7,13 @@ export const routes: Routes = [
     component: LayoutComponent,
     children: [
       {
+        path: '',
+        loadComponent: () =>
+          import('./app/homepage/homepage.component').then(
+            (m) => m.HomepageComponent
+          ),
+      },
+      {
         path: 'mitglieder',
         loadComponent: () =>
           import('./app/users/users.component').then((m) => m.UsersComponent),

@@ -2,6 +2,7 @@ import {
   ChangeDetectionStrategy,
   Component,
   OnInit,
+  inject,
   signal,
 } from '@angular/core';
 import { LayoutComponent } from '../core/layout/layout.component';
@@ -13,6 +14,7 @@ import { ButtonModule } from 'primeng/button';
 import { CommonModule } from '@angular/common';
 import { PrimeNGConfig } from 'primeng/api';
 import { FormControl, ReactiveFormsModule } from '@angular/forms';
+import { GlobalStore } from '../core/stores/global.store';
 
 @Component({
   selector: 'app-attendances',
@@ -30,14 +32,21 @@ import { FormControl, ReactiveFormsModule } from '@angular/forms';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class AttendancesComponent implements OnInit {
+  readonly store = inject(GlobalStore);
+
   constructor(
     private primengConfig: PrimeNGConfig,
     private layoutComponent: LayoutComponent
-  ) {}
+  ) {
+    this.attandences = this.store.attendances();
+    this.departments = this.store.departments();
+    this.users = this.store.users();
+  }
 
   attandences!: Attendance[];
   departments!: Department[];
   users!: User[];
+  userNames!: string[];
   selectedDate = new FormControl<Date | null>(null);
   currentDate!: Date;
 
@@ -47,92 +56,10 @@ export class AttendancesComponent implements OnInit {
     this.currentDate = new Date();
     this.selectedDate.setValue(this.currentDate);
 
-    this.attandences = [
-      // {
-      //   user_id: 1,
-      //   date: '13.03.2024',
-      //   month: 'März',
-      //   department_id: 1,
-      //   id: 1,
-      // },
-      // {
-      //   user_id: 2,
-      //   date: '13.03.2024',
-      //   month: 'März',
-      //   department_id: 1,
-      //   id: 2,
-      // },
-      // {
-      //   user_id: 3,
-      //   date: '13.03.2024',
-      //   month: 'März',
-      //   department_id: 1,
-      //   id: 3,
-      // },
-      // {
-      //   user_id: 4,
-      //   date: '13.03.2024',
-      //   month: 'März',
-      //   department_id: 1,
-      //   id: 4,
-      // },
-      // {
-      //   user_id: 5,
-      //   date: '13.03.2024',
-      //   month: 'März',
-      //   department_id: 1,
-      //   id: 5,
-      // },
-      // {
-      //   user_id: 6,
-      //   date: '13.03.2024',
-      //   month: 'März',
-      //   department_id: 1,
-      //   id: 6,
-      // },
-      // {
-      //   user_id: 7,
-      //   date: '13.03.2024',
-      //   month: 'März',
-      //   department_id: 1,
-      //   id: 7,
-      // },
-      // {
-      //   user_id: 8,
-      //   date: '13.03.2024',
-      //   month: 'März',
-      //   department_id: 1,
-      //   id: 8,
-      // },
-      // {
-      //   user_id: 9,
-      //   date: '13.03.2024',
-      //   month: 'März',
-      //   department_id: 1,
-      //   id: 9,
-      // },
-      // {
-      //   user_id: 10,
-      //   date: '13.03.2024',
-      //   month: 'März',
-      //   department_id: 1,
-      //   id: 10,
-      // },
-      // {
-      //   user_id: 11,
-      //   date: '13.03.2024',
-      //   month: 'März',
-      //   department_id: 1,
-      //   id: 11,
-      // },
-      // {
-      //   user_id: 12,
-      //   date: '13.03.2024',
-      //   month: 'März',
-      //   department_id: 1,
-      //   id: 12,
-      // },
-    ];
+    this.users.forEach((user) =>
+      this.userNames.push(user.first_name + user.last_name)
+    );
+    console.log(this.users);
 
     this.primengConfig.setTranslation({
       firstDayOfWeek: 1,
