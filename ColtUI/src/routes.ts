@@ -32,6 +32,20 @@ export const routes: Routes = [
             (m) => m.DepartmentsComponent
           ),
       },
+      {
+        path: 'mitgliederstellung',
+        loadComponent: () =>
+          import('./app/user-create/user-create.component').then(
+            (m) => m.UserCreateComponent
+          ),
+      },
+      {
+        path: 'details',
+        loadComponent: () =>
+          import('./app/user-details/user-details.component').then(
+            (m) => m.UserDetailsComponent
+          ),
+      },
     ],
   },
 ];

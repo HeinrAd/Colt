@@ -1,0 +1,93 @@
+<div class="grid grid-nogutter flex justify-content-start flex-row">
+  <div class="flex flex-column md:flex-row xl:align-items-start p-4 gap-4">
+    <!-- First Column -->
+    <div class="flex flex-column gap-5">
+      <span class="p-float-label mt-2">
+        <input
+          type="text"
+          pInputText
+          required="true"
+          id="firstName"
+          [formControl]="firstName"
+        />
+        <label for="firstName">Vorname</label>
+      </span>
+      <span class="p-float-label">
+        <input
+          type="text"
+          pInputText
+          required="true"
+          id="lastName"
+          [formControl]="lastName"
+        />
+        <label for="lastName">Nachname</label>
+      </span>
+      <span class="p-float-label">
+        <input
+          type="text"
+          pInputText
+          required="true"
+          id="email"
+          [formControl]="email"
+        />
+        <label for="email">Email</label>
+      </span>
+      <span class="p-float-label">
+        <p-calendar
+          [required]="true"
+          [formControl]="birthday"
+          dateFormat="dd.mm.yy"
+        ></p-calendar>
+        <label for="birthday">Geburtstag</label>
+      </span>
+      <span class="p-float-label">
+        <input
+          type="text"
+          pInputText
+          required="true"
+          id="street"
+          [formControl]="street"
+        />
+        <label for="street">Straße</label>
+      </span>
+      <span class="p-float-label">
+        <input
+          pKeyFilter="int"
+          pInputText
+          required="true"
+          id="houseNumber"
+          [formControl]="houseNumber"
+        />
+        <label for="houseNumber">Hausnummer</label>
+      </span>
+      <span class="p-float-label">
+        <input
+          pInputText
+          pKeyFilter="int"
+          required="true"
+          id="postcode"
+          [formControl]="postcode"
+        />
+        <label for="postcode">Postleitzahl</label>
+      </span>
+      <span class="p-float-label">
+        <input
+          type="text"
+          pInputText
+          required="true"
+          id="city"
+          [formControl]="city"
+        />
+        <label for="city">Stadt</label>
+      </span>
+    </div>
+  </div>
+
+  <!-- Second Column -->
+  <div class="col flex flex-column justify-content-end align-items-end p-4">
+    <div class="flex gap-4">
+      <p-button label="Speichern" (click)="onSave()"></p-button>
+      <p-button label="Abbrechen" (click)="onAbort()"></p-button>
+    </div>
+  </div>
+</div>

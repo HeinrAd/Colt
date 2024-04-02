@@ -1,67 +1,59 @@
-<p-dataView #dv [value]="store.users()">
-  <ng-template pTemplate="list" let-users>
-    <div class="grid grid-nogutter">
-      <div class="col-12" *ngFor="let user of users; let first = first">
+<div>
+  <p-button label="Mitglied hinzufügen" (click)="onCreateUser()"></p-button>
+</div>
+<p-divider></p-divider>
+<div class="grid grid-nogutter">
+  <div class="col-12" *ngFor="let user of store.users(); let first = first">
+    <div
+      class="flex flex-column xl:flex-row xl:align-items-start p-4 gap-4"
+      [ngClass]="{ 'border-top-1 surface-border': !first }"
+    >
+      <div
+        class="flex flex-column sm:flex-row justify-content-between align-items-start flex-1 xl:align-items-start gap-4"
+      >
+        <!-- First Column -->
         <div
-          class="flex flex-column xl:flex-row xl:align-items-start p-4 gap-4"
-          [ngClass]="{ 'border-top-1 surface-border': !first }"
+          class="col-3 flex flex-column align-items-center sm:align-items-start gap-3"
         >
-          <div
-            class="flex flex-column sm:flex-row justify-content-between align-items-center xl:align-items-start flex-1 gap-4"
-          >
-            <div
-              class="flex flex-column align-items-center sm:align-items-start gap-3"
-            >
-              <div class="text-2xl font-bold text-900">
-                {{ user.first_name }} {{ user.last_name }}
-              </div>
-              <div *ngIf="user.is_active; else inactive">
-                <p-tag value="Aktiv" severity="success"></p-tag>
-              </div>
-              <ng-template #inactive
-                ><p-tag value="Inaktiv" severity="danger"></p-tag
-              ></ng-template>
-              <span class="flex align-items-center gap-2">
-                <i class="pi pi-database">
-                  {{ user.birthday | date : "dd.MM.yyyy" }}</i
-                >
-                <span class="font-semibold"></span>
-              </span>
-            </div>
-
-            <div class="text-2xl font-bold text-900">
-              <div *ngFor="let department of user.departments">
-                {{ department.title }}
-              </div>
-              <p-progressBar [value]="user.attendances.lenght">
-                <ng-template pTemplate="content" let-value>
-                  <span>{{ value }}/12</span>
-                </ng-template></p-progressBar
-              >
-            </div>
-
-            <div class="flex flex-column align-items-end">
-              <p-dropdown
-                *ngIf="user.departments.length > 1"
-                class="mb-2"
-                [options]="user.departments"
-                [formControl]="selectedDepartment"
-                placeholder="Abteilung wählen"
-                optionLabel="title"
-              ></p-dropdown>
-              <p-button
-                class="mb-2"
-                label="Heute anwesend"
-                (click)="createAttendanceToday(user)"
-              ></p-button>
-              <p-button
-                [styleClass]="'p-button-text'"
-                label="Details"
-              ></p-button>
-            </div>
+          <div class="text-2xl font-bold text-900">
+            {{ user.first_name }} {{ user.last_name }}
           </div>
+          <div *ngIf="user.is_active; else inactive">
+            <p-tag value="Aktiv" severity="success"></p-tag>
+          </div>
+          <ng-template #inactive
+            ><p-tag value="Inaktiv" severity="danger"></p-tag
+          ></ng-template>
+        </div>
+
+        <!-- Second Column -->
+        <div class="col-6 flex flex-column justify-content-start text-900">
+          <p class="text-2xl">Abteilungen</p>
+          <div *ngFor="let department of user.departments" class="text-xl">
+            - {{ department.title }}
+          </div>
+        </div>
+
+        <!-- Third Column -->
+        <div class="col flex flex-column align-items-start gap-3">
+          <p-dropdown
+            *ngIf="user.departments.length > 1"
+            [options]="user.departments"
+            [formControl]="selectedDepartment"
+            placeholder="Abteilung wählen"
+            optionLabel="title"
+          ></p-dropdown>
+          <p-button
+            label="Heute anwesend"
+            (click)="createAttendanceToday(user)"
+          ></p-button>
+          <p-button
+            [styleClass]="'p-button-text'"
+            label="Details"
+            (click)="onDetails(user)"
+          ></p-button>
         </div>
       </div>
     </div>
-  </ng-template>
-</p-dataView>
+  </div>
+</div>
