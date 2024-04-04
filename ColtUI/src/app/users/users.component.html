@@ -1,5 +1,9 @@
 <div>
-  <p-button label="Mitglied hinzufügen" (click)="onCreateUser()"></p-button>
+  <p-button
+    label="Mitglied hinzufügen"
+    icon="pi pi-plus"
+    (click)="onCreateUser()"
+  ></p-button>
 </div>
 <p-divider></p-divider>
 <div class="grid grid-nogutter">
@@ -45,11 +49,13 @@
           ></p-dropdown>
           <p-button
             label="Heute anwesend"
+            icon="pi pi-stopwatch"
             (click)="createAttendanceToday(user)"
           ></p-button>
           <p-button
             [styleClass]="'p-button-text'"
             label="Details"
+            icon="pi pi-book"
             (click)="onDetails(user)"
           ></p-button>
         </div>

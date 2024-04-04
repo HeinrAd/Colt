@@ -1,13 +1,141 @@
-<p>{{ store.user().first_name }}</p>
 <div class="grid grid-nogutter">
   <div class="col-12">
-    <div class="flex flex-column sm:flex-row p-4 gap-4">
+    <div class="flex flex-column sm:flex-row gap-4">
       <!-- First Column -->
-      <div class="col-4">asdasd</div>
+      <div
+        class="col-2 flex flex-column text-xl font-bold justify-content-between align-items-start gap-4"
+      >
+        <div>Vorname:</div>
+        <div>Nachname:</div>
+        <div>Email:</div>
+        <div>Geburtstag:</div>
+        <div>Straße:</div>
+        <div>Hausnummer:</div>
+        <div>PLZ:</div>
+        <div>Wohnort:</div>
+      </div>
       <!-- Second Column -->
-      <div class="col-4">asdasd</div>
+      <div
+        class="col-4 flex flex-column text-xl justify-content-start align-items-start gap-4"
+        *ngIf="!isEditView()"
+      >
+        <div>{{ store.user().first_name }}</div>
+        <div>{{ store.user().last_name }}</div>
+        <div>{{ store.user().email }}</div>
+        <div>
+          {{ store.user().birthday | date : "dd.MM.yyyy" }}
+        </div>
+        <div>{{ store.user().street }}</div>
+        <div>{{ store.user().house_number }}</div>
+        <div>{{ store.user().postcode }}</div>
+        <div>{{ store.user().city }}</div>
+      </div>
+      <!-- Second Column Edit View-->
+      <div
+        class="col-4 flex flex-column justify-content-between align-items-start gap-1"
+        *ngIf="isEditView()"
+      >
+        <input
+          type="text"
+          pInputText
+          required="true"
+          id="firstName"
+          [formControl]="firstName"
+        />
+        <input
+          type="text"
+          pInputText
+          required="true"
+          id="lastName"
+          [formControl]="lastName"
+        />
+        <input
+          type="text"
+          pInputText
+          required="true"
+          id="email"
+          [formControl]="email"
+        />
+        <p-calendar
+          [required]="true"
+          [formControl]="birthday"
+          dateFormat="dd.mm.yy"
+        ></p-calendar>
+        <input
+          type="text"
+          pInputText
+          required="true"
+          id="street"
+          [formControl]="street"
+        />
+        <input
+          pKeyFilter="int"
+          pInputText
+          required="true"
+          id="houseNumber"
+          [formControl]="houseNumber"
+        />
+        <input
+          pInputText
+          pKeyFilter="int"
+          required="true"
+          id="postcode"
+          [formControl]="postcode"
+        />
+        <input
+          type="text"
+          pInputText
+          required="true"
+          id="city"
+          [formControl]="city"
+        />
+      </div>
       <!-- Third Column -->
-      <div class="col-4">asdasd</div>
+      <div class="col-4 flex flex-column justify-content-between">
+        <div class="flex flex-column gap-2">
+          <div class="text-xl font-bold">
+            <div>Status:</div>
+            <div *ngIf="isActive.getRawValue(); else inactive">
+              <p-tag
+                class="text-2xl font-bold"
+                value="Aktiv"
+                severity="success"
+              ></p-tag>
+            </div>
+            <ng-template #inactive>
+              <p-tag
+                class="text-2xl font-bold"
+                value="Inaktiv"
+                severity="danger"
+              ></p-tag>
+            </ng-template>
+          </div>
+          <p-inputSwitch
+            [formControl]="isActive"
+            *ngIf="isEditView()"
+          ></p-inputSwitch>
+        </div>
+        <div class="flex flex-column gap-2">
+          <p-button label="Anwesenheiten" icon="pi pi-calendar"></p-button>
+          <p-button label="Abteilungen" icon="pi pi-building"></p-button>
+        </div>
+        <div>
+          <p-button
+            label="Bearbeiten"
+            icon="pi pi-pencil"
+            (click)="toggleEdit()"
+            *ngIf="!isEditView()"
+          ></p-button>
+          <span *ngIf="isEditView()">
+            <p-button
+              class="mr-2"
+              label="Speichern"
+              (click)="onSave()"
+            ></p-button>
+            <p-button label="Abbrechen" (click)="toggleEdit()"></p-button>
+          </span>
+        </div>
+      </div>
     </div>
   </div>
 </div>
