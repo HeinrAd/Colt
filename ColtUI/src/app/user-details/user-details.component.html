@@ -1,9 +1,9 @@
 <div class="grid grid-nogutter">
   <div class="col-12">
-    <div class="flex flex-column sm:flex-row gap-4">
+    <div class="flex flex-column sm:flex-row gap-4 justify-content-between">
       <!-- First Column -->
       <div
-        class="col-2 flex flex-column text-xl font-bold justify-content-between align-items-start gap-4"
+        class="col-3 flex flex-column text-xl font-bold justify-content-between align-items-start gap-4"
       >
         <div>Vorname:</div>
         <div>Nachname:</div>
@@ -150,6 +150,7 @@
             class="mb-2"
             label="Anwesenheiten"
             icon="pi pi-calendar"
+            (onClick)="onAttendance()"
           ></p-button>
           <p-button
             label="Bearbeiten"

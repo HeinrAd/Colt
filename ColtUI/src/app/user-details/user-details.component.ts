@@ -59,7 +59,7 @@ export class UserDetailsComponent implements OnInit {
   departments = new FormControl<Department[]>(this.store.user().departments);
 
   ngOnInit(): void {
-    this.layoutComponent.cardHeader.update(() => 'Details');
+    this.layoutComponent.cardHeader.update(() => 'Mitglieder-Details');
   }
 
   onBack(): void {

@@ -1,6 +1,9 @@
 <app-topbar></app-topbar>
 <div class="flex p-3 justify-content-center">
-  <p-card header="{{ cardHeader() }}" [style]="{ 'max-width': '1080px' }">
+  <p-card
+    header="{{ cardHeader() }}"
+    [style]="{ 'max-width': '1080px', 'min-width': '800px' }"
+  >
     <router-outlet class="flex justify-content-center" />
   </p-card>
 </div>
