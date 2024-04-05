@@ -12,10 +12,15 @@ import { AttendanceCreate, Department, User } from '../shared';
 import { CalendarModule } from 'primeng/calendar';
 import { ButtonModule } from 'primeng/button';
 import { CommonModule } from '@angular/common';
-import { MessageService, PrimeNGConfig } from 'primeng/api';
+import {
+  ConfirmationService,
+  MessageService,
+  PrimeNGConfig,
+} from 'primeng/api';
 import { FormControl, ReactiveFormsModule } from '@angular/forms';
 import { GlobalStore } from '../core/stores/global.store';
 import { ToastModule } from 'primeng/toast';
+import { ConfirmDialogModule } from 'primeng/confirmdialog';
 
 @Component({
   selector: 'app-attendances',
@@ -28,8 +33,9 @@ import { ToastModule } from 'primeng/toast';
     ReactiveFormsModule,
     ButtonModule,
     ToastModule,
+    ConfirmDialogModule,
   ],
-  providers: [MessageService],
+  providers: [MessageService, ConfirmationService],
   templateUrl: './attendances.component.html',
   styleUrl: './attendances.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
@@ -40,7 +46,8 @@ export class AttendancesComponent implements OnInit {
   constructor(
     private primengConfig: PrimeNGConfig,
     private layoutComponent: LayoutComponent,
-    private messageService: MessageService
+    private messageService: MessageService,
+    private confirmationService: ConfirmationService
   ) {}
 
   selectedUser = new FormControl<User | null>(null);
@@ -115,6 +122,32 @@ export class AttendancesComponent implements OnInit {
       detail: `Eintrag für ${this.selectedUser.getRawValue()?.first_name} ${
         this.selectedUser.getRawValue()?.last_name
       } erstellt`,
+    });
+    this.store.loadUsers();
+    window.location.reload();
+  }
+
+  confirmDelete(id: number) {
+    this.confirmationService.confirm({
+      message: `Möchten Sie die Anwesenheit wirklich löschen?`,
+      icon: 'pi pi-exclamation-triangle',
+      accept: () => {
+        this.messageService.add({
+          severity: 'info',
+          summary: 'Gelöscht',
+          detail: 'Der Eintrag wurde gelöscht',
+          life: 3000,
+        });
+        this.store.deleteAttendance(id);
+      },
+      reject: () => {
+        this.messageService.add({
+          severity: 'error',
+          summary: 'Abgebrochen',
+          detail: 'Der Vorgang wurde von Ihnen abgebrochen',
+          life: 3000,
+        });
+      },
     });
   }
 }
