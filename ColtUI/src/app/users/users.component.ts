@@ -14,8 +14,9 @@ import { ButtonModule } from 'primeng/button';
 import { CommonModule } from '@angular/common';
 import { DialogModule } from 'primeng/dialog';
 import { DropdownModule } from 'primeng/dropdown';
-import { ProgressBarModule } from 'primeng/progressbar';
-import { AttendanceCreate, AttendanceUpdate, User } from '../shared';
+import { DividerModule } from 'primeng/divider';
+import { AttendanceCreate, User } from '../shared';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-users',
@@ -28,14 +29,17 @@ import { AttendanceCreate, AttendanceUpdate, User } from '../shared';
     ButtonModule,
     DialogModule,
     DropdownModule,
-    ProgressBarModule,
+    DividerModule,
   ],
   templateUrl: './users.component.html',
   styleUrl: './users.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class UsersComponent implements OnInit {
-  constructor(private layoutComponent: LayoutComponent) {}
+  constructor(
+    private layoutComponent: LayoutComponent,
+    private router: Router
+  ) {}
 
   readonly store = inject(GlobalStore);
 
@@ -66,5 +70,14 @@ export class UsersComponent implements OnInit {
       department_id: departmentId,
     };
     this.store.createNewAttendance(newAttendance);
+  }
+
+  onCreateUser(): void {
+    this.router.navigate(['/mitgliederstellung']);
+  }
+
+  onDetails(user: User): void {
+    this.store.setUser(user);
+    this.router.navigate(['/details']);
   }
 }
