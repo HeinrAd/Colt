@@ -115,11 +115,42 @@
             *ngIf="isEditView()"
           ></p-inputSwitch>
         </div>
-        <div class="flex flex-column gap-2">
-          <p-button label="Anwesenheiten" icon="pi pi-calendar"></p-button>
-          <p-button label="Abteilungen" icon="pi pi-building"></p-button>
+        <div *ngIf="!isEditView()">
+          <div class="text-xl font-bold mb-2">Abteilungen:</div>
+          <div *ngFor="let department of store.user().departments">
+            <div class="text-xl mb-2">{{ department.title }}</div>
+          </div>
         </div>
-        <div>
+        <div *ngIf="isEditView()" class="mb-4">
+          <div class="text-xl font-bold mb-2">Abteilungen:</div>
+          <div
+            *ngFor="let department of store.departments(); index as i"
+            class="flex flex-row justify-content-start align-items-center"
+          >
+            <p-button
+              *ngIf="!store.user().departments.includes(department)"
+              icon="pi pi-check"
+              [rounded]="true"
+              [text]="true"
+              severity="success"
+            ></p-button>
+            <p-button
+              *ngIf="store.user().departments.includes(department)"
+              icon="pi pi-times"
+              [rounded]="true"
+              [text]="true"
+              severity="danger"
+            ></p-button>
+            <div class="text-xl ml-2">{{ department.title }}</div>
+          </div>
+        </div>
+        <div class="flex flex-column">
+          <p-button
+            *ngIf="!isEditView()"
+            class="mb-2"
+            label="Anwesenheiten"
+            icon="pi pi-calendar"
+          ></p-button>
           <p-button
             label="Bearbeiten"
             icon="pi pi-pencil"

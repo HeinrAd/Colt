@@ -80,6 +80,8 @@ export class UserDetailsComponent implements OnInit {
       : this.isEditView.update(() => true);
   }
 
+  onChangeSwitchDepartment(i: number): void {}
+
   onSave(): void {
     if (
       !this.store.user() ||
