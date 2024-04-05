@@ -7,9 +7,29 @@
       <div>
         <label for="dropdown" class="font-bold block mb-2">Benutzer</label>
         <p-dropdown
-          [options]="userNames"
+          [options]="store.users()"
+          [showClear]="true"
           inputId="dropdown"
+          [formControl]="selectedUser"
+          optionLabel="first_name"
           [style]="{ 'min-width': '25rem' }"
+        >
+          <ng-template let-user pTemplate="item">
+            <div class="flex align-items-center">
+              <div>{{ user.first_name }} {{ user.last_name }}</div>
+            </div>
+          </ng-template>
+        </p-dropdown>
+      </div>
+      <div class="ml-3">
+        <label for="dropdown" class="font-bold block mb-2">Abteilung</label>
+        <p-dropdown
+          [options]="store.departments()"
+          inputId="dropdown"
+          [formControl]="selectedDepartment"
+          optionLabel="title"
+          class=""
+          [style]="{ 'min-width': '15rem' }"
         />
       </div>
       <div class="ml-3" [style]="{ 'min-width': '106px' }">
@@ -36,7 +56,7 @@
       Liste aller Anwesenheiten
     </h5>
     <p-table
-      [value]="store.attendances()"
+      [value]="selectedUser.getRawValue()?.attendances ?? store.attendances()"
       styleClass="p-datatable-striped"
       [paginator]="true"
       [rows]="10"
@@ -44,20 +64,22 @@
     >
       <ng-template pTemplate="header">
         <tr>
-          <th pSortableColumn="user_id">Name <p-sortIcon field="user_id" /></th>
+          <th pSortableColumn="id">ID <p-sortIcon field="id" /></th>
           <th pSortableColumn="date">Tag <p-sortIcon field="date" /></th>
-          <th pSortableColumn="department_id">
-            Abteilung <p-sortIcon field="department_id" />
+          <th pSortableColumn="department">
+            Abteilung <p-sortIcon field="department" />
           </th>
         </tr>
       </ng-template>
       <ng-template pTemplate="body" let-attandence>
         <tr>
-          <th>{{ attandence.user_id }}</th>
-          <th>{{ attandence.date }}</th>
-          <th>{{ attandence.department_id }}</th>
+          <td>{{ attandence.id }}</td>
+          <td>{{ attandence.date | date : "dd.MM.yyyy" }}</td>
+          <td>{{ attandence.department.title }}</td>
         </tr>
       </ng-template>
     </p-table>
   </div>
 </div>
+
+<p-toast></p-toast>

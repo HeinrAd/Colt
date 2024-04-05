@@ -8,13 +8,14 @@ import {
 import { LayoutComponent } from '../core/layout/layout.component';
 import { TableModule } from 'primeng/table';
 import { DropdownModule } from 'primeng/dropdown';
-import { Attendance, Department, User } from '../shared';
+import { AttendanceCreate, Department, User } from '../shared';
 import { CalendarModule } from 'primeng/calendar';
 import { ButtonModule } from 'primeng/button';
 import { CommonModule } from '@angular/common';
-import { PrimeNGConfig } from 'primeng/api';
+import { MessageService, PrimeNGConfig } from 'primeng/api';
 import { FormControl, ReactiveFormsModule } from '@angular/forms';
 import { GlobalStore } from '../core/stores/global.store';
+import { ToastModule } from 'primeng/toast';
 
 @Component({
   selector: 'app-attendances',
@@ -26,7 +27,9 @@ import { GlobalStore } from '../core/stores/global.store';
     CalendarModule,
     ReactiveFormsModule,
     ButtonModule,
+    ToastModule,
   ],
+  providers: [MessageService],
   templateUrl: './attendances.component.html',
   styleUrl: './attendances.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
@@ -36,18 +39,13 @@ export class AttendancesComponent implements OnInit {
 
   constructor(
     private primengConfig: PrimeNGConfig,
-    private layoutComponent: LayoutComponent
-  ) {
-    this.attandences = this.store.attendances();
-    this.departments = this.store.departments();
-    this.users = this.store.users();
-  }
+    private layoutComponent: LayoutComponent,
+    private messageService: MessageService
+  ) {}
 
-  attandences!: Attendance[];
-  departments!: Department[];
-  users!: User[];
-  userNames!: string[];
+  selectedUser = new FormControl<User | null>(null);
   selectedDate = new FormControl<Date | null>(null);
+  selectedDepartment = new FormControl<Department | null>(null);
   currentDate!: Date;
 
   ngOnInit(): void {
@@ -55,11 +53,6 @@ export class AttendancesComponent implements OnInit {
 
     this.currentDate = new Date();
     this.selectedDate.setValue(this.currentDate);
-
-    this.users.forEach((user) =>
-      this.userNames.push(user.first_name + user.last_name)
-    );
-    console.log(this.users);
 
     this.primengConfig.setTranslation({
       firstDayOfWeek: 1,
@@ -110,6 +103,18 @@ export class AttendancesComponent implements OnInit {
   }
 
   saveAttendance(): void {
-    console.log(this.selectedDate.getRawValue());
+    var newAttandance: AttendanceCreate = {
+      date: this.selectedDate.getRawValue()!.toISOString(),
+      user_id: this.selectedUser.getRawValue()!.id,
+      department_id: this.selectedDepartment.getRawValue()!.id,
+    };
+    this.store.createNewAttendance(newAttandance);
+    this.messageService.add({
+      severity: 'success',
+      summary: 'Erfolg',
+      detail: `Eintrag für ${this.selectedUser.getRawValue()?.first_name} ${
+        this.selectedUser.getRawValue()?.last_name
+      } erstellt`,
+    });
   }
 }
