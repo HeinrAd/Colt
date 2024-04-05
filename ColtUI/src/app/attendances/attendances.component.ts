@@ -123,8 +123,8 @@ export class AttendancesComponent implements OnInit {
         this.selectedUser.getRawValue()?.last_name
       } erstellt`,
     });
+    this.selectedUser.setValue(null);
     this.store.loadUsers();
-    window.location.reload();
   }
 
   confirmDelete(id: number) {
