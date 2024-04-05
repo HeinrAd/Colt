@@ -1,1 +1,135 @@
-<p>departments works!</p>
+<div class="grid grid-nogutter">
+  <div class="col-12 flex flex-row text-xl font-bold">
+    <div class="col-3 flex align-items-center justify-content-center">Name</div>
+    <p-divider layout="vertical"></p-divider>
+    <div class="col-4 flex align-items-center justify-content-center">
+      Beschreibung
+    </div>
+    <p-divider layout="vertical"></p-divider>
+    <div class="col flex align-items-center justify-content-center">Preis</div>
+  </div>
+  <p-divider class="col-12"></p-divider>
+  <div class="col-12">
+    <div
+      class="flex flex-column sm:flex-row"
+      *ngFor="let department of store.departments()"
+    >
+      <!-- First Column -->
+      <div class="col-3 flex flex-column text-lg align-items-start">
+        <div>
+          {{ department.title }}
+        </div>
+      </div>
+      <p-divider layout="vertical"></p-divider>
+
+      <!-- Second Column -->
+      <div class="col-4 flex flex-column text-lg align-items-start">
+        <div>
+          {{ department.description }}
+        </div>
+      </div>
+      <p-divider layout="vertical"></p-divider>
+
+      <!-- Third Column -->
+      <div
+        class="col flex flex-column text-lg align-items-center justify-content-center"
+      >
+        <div>
+          {{ department.price | number : "1.2-2" }}
+          <i class="pi pi-euro"></i>
+        </div>
+      </div>
+    </div>
+    <p-divider></p-divider>
+  </div>
+</div>
+<div>
+  <div *ngIf="isAddDepartment()" class="flex flex-row gap-2 mt-3 mb-3">
+    <span class="p-float-label">
+      <input pInputText required="true" id="title" [formControl]="title" />
+      <label for="title">Name</label>
+    </span>
+    <span class="p-float-label">
+      <input pInputText id="description" [formControl]="description" />
+      <label for="description">Beschreibung</label>
+    </span>
+    <span class="p-float-label">
+      <input
+        pInputText
+        pKeyFilter="int"
+        required="true"
+        id="price"
+        [formControl]="price"
+      />
+      <label for="price">Preis</label>
+    </span>
+  </div>
+  <div *ngIf="isEditDepartment()" class="mb-3">
+    <p-dropdown
+      placeholder="Abteilung auswählen"
+      [options]="store.departments()"
+      optionLabel="title"
+      [formControl]="dropdown"
+      (onChange)="onChangeEditDepartment()"
+    ></p-dropdown>
+    <div class="flex flex-row gap-2 mt-3 mb-3" *ngIf="dropdown.getRawValue()">
+      <input pInputText required="true" [formControl]="title" />
+      <input pInputText [formControl]="description" />
+      <input
+        pInputText
+        pKeyFilter="int"
+        required="true"
+        [formControl]="price"
+      />
+      <p-confirmPopup></p-confirmPopup>
+      <p-button
+        (click)="confirm($event)"
+        icon="pi pi-trash"
+        label="Löschen"
+        severity="danger"
+      ></p-button>
+    </div>
+  </div>
+  <div class="mb-3" *ngIf="!isEditDepartment() && !isAddDepartment()">
+    <p-button
+      class="mr-3"
+      label="Abteilung hinzufügen"
+      icon="pi pi-plus"
+      (click)="toggleIsAddDepartment()"
+    ></p-button>
+    <p-button
+      *ngIf="!isEditDepartment() && !isAddDepartment()"
+      label="Abteilung bearbeiten"
+      icon="pi pi-pencil"
+      (click)="toggleIsEditDepartment()"
+    ></p-button>
+  </div>
+  <div *ngIf="isAddDepartment()">
+    <p-button
+      class="mr-3"
+      severity="success"
+      label="Speichern"
+      icon="pi pi-save"
+    ></p-button>
+    <p-button
+      severity="danger"
+      label="Abbrechen"
+      icon="pi pi-times"
+      (click)="toggleIsAddDepartment()"
+    ></p-button>
+  </div>
+  <div *ngIf="isEditDepartment()">
+    <p-button
+      class="mr-3"
+      severity="success"
+      label="Speichern"
+      icon="pi pi-save"
+    ></p-button>
+    <p-button
+      severity="danger"
+      label="Abbrechen"
+      icon="pi pi-times"
+      (click)="toggleIsEditDepartment()"
+    ></p-button>
+  </div>
+</div>

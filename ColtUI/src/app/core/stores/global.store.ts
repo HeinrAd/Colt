@@ -181,6 +181,10 @@ export const GlobalStore = signalStore(
       patchState(store, { user: newUser });
     },
 
+    setDepartment(newDepartment: Department): void {
+      patchState(store, { department: newDepartment });
+    },
+
     checkIfCertified(user: any): boolean {
       return false;
     },

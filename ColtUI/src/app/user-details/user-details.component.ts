@@ -66,6 +66,14 @@ export class UserDetailsComponent implements OnInit {
     this.router.navigate(['/mitglieder']);
   }
 
+  onAttendance(): void {
+    this.router.navigate(['/anwesenheiten']);
+  }
+
+  onDepartments(): void {
+    this.router.navigate(['/abteilungen']);
+  }
+
   toggleEdit(): void {
     this.isEditView()
       ? this.isEditView.update(() => false)
@@ -74,6 +82,7 @@ export class UserDetailsComponent implements OnInit {
 
   onSave(): void {
     if (
+      !this.store.user() ||
       !this.firstName ||
       !this.lastName ||
       !this.email ||

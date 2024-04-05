@@ -130,9 +130,16 @@
             <p-button
               class="mr-2"
               label="Speichern"
+              severity="success"
+              icon="pi pi-save"
               (click)="onSave()"
             ></p-button>
-            <p-button label="Abbrechen" (click)="toggleEdit()"></p-button>
+            <p-button
+              label="Abbrechen"
+              severity="danger"
+              icon="pi pi-times"
+              (click)="toggleEdit()"
+            ></p-button>
           </span>
         </div>
       </div>

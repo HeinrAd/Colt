@@ -86,8 +86,18 @@
   <!-- Second Column -->
   <div class="col flex flex-column justify-content-end align-items-end p-4">
     <div class="flex gap-4">
-      <p-button label="Speichern" (click)="onSave()"></p-button>
-      <p-button label="Abbrechen" (click)="onAbort()"></p-button>
+      <p-button
+        label="Speichern"
+        severity="success"
+        icon="pi pi-save"
+        (click)="onSave()"
+      ></p-button>
+      <p-button
+        label="Abbrechen"
+        severity="danger"
+        icon="pi pi-times"
+        (click)="onAbort()"
+      ></p-button>
     </div>
   </div>
 </div>
