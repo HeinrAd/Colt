@@ -114,12 +114,13 @@ export const GlobalStore = signalStore(
         .subscribe((updatedAttendance) =>
           patchState(store, {
             attendance: updatedAttendance,
-            attendances: store.attendances().map((attendance) => {
-              if (attendance.id === id) {
-                return { ...attendance, updatedAttendance };
-              }
-              return attendance;
-            }),
+            attendances: store
+              .attendances()
+              .map((attendance) =>
+                attendance.id === id
+                  ? { ...attendance, ...updatedAttendance }
+                  : attendance
+              ),
           })
         );
     },
@@ -129,12 +130,13 @@ export const GlobalStore = signalStore(
         .subscribe((updatedDepartment) =>
           patchState(store, {
             department: updatedDepartment,
-            departments: store.departments().map((attendance) => {
-              if (attendance.id === id) {
-                return { ...attendance, updatedDepartment };
-              }
-              return attendance;
-            }),
+            departments: store
+              .departments()
+              .map((department) =>
+                department.id === id
+                  ? { ...department, ...updatedDepartment }
+                  : department
+              ),
           })
         );
     },
@@ -173,6 +175,14 @@ export const GlobalStore = signalStore(
           console.log('Deleted Department: ', deletedResponse)
         )
       );
+    },
+
+    setUser(newUser: User): void {
+      patchState(store, { user: newUser });
+    },
+
+    setDepartment(newDepartment: Department): void {
+      patchState(store, { department: newDepartment });
     },
 
     checkIfCertified(user: any): boolean {
