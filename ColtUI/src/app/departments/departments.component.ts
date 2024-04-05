@@ -113,6 +113,8 @@ export class DepartmentsComponent implements OnInit {
           life: 3000,
         });
         this.store.deleteDepartment(this.dropdown.getRawValue()!.id);
+        this.toggleIsEditDepartment();
+        this.resetDepartment();
       },
       reject: () => {
         this.messageService.add({
@@ -151,7 +153,10 @@ export class DepartmentsComponent implements OnInit {
       price: this.price.getRawValue()!,
     };
 
-    this.store.changeDepartment(this.store.department().id, editedDepartment);
+    this.store.changeDepartment(
+      this.dropdown.getRawValue()!.id,
+      editedDepartment
+    );
     this.toggleIsEditDepartment();
   }
 }
