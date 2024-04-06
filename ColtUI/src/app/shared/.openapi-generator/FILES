@@ -16,7 +16,6 @@ model/department.ts
 model/departmentCreate.ts
 model/departmentUpdate.ts
 model/departmentUsers.ts
-model/departments.ts
 model/hTTPValidationError.ts
 model/models.ts
 model/user.ts
