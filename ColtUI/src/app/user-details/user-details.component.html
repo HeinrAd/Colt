@@ -144,7 +144,7 @@
           >
             <p-button
               *ngIf="!findDepartment(department)"
-              icon="pi pi-check"
+              icon="pi pi-plus"
               [rounded]="true"
               [text]="true"
               severity="success"
@@ -152,7 +152,7 @@
             ></p-button>
             <p-button
               *ngIf="findDepartment(department)"
-              icon="pi pi-times"
+              icon="pi pi-minus"
               [rounded]="true"
               [text]="true"
               severity="danger"

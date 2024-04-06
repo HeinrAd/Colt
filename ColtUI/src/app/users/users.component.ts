@@ -19,6 +19,7 @@ import { AttendanceCreate, User } from '../shared';
 import { Router } from '@angular/router';
 import { ToastModule } from 'primeng/toast';
 import { MessageService } from 'primeng/api';
+import { TooltipModule } from 'primeng/tooltip';
 
 @Component({
   selector: 'app-users',
@@ -33,6 +34,7 @@ import { MessageService } from 'primeng/api';
     DropdownModule,
     DividerModule,
     ToastModule,
+    TooltipModule,
   ],
   providers: [MessageService],
   templateUrl: './users.component.html',
