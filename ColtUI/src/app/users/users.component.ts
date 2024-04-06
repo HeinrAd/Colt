@@ -80,4 +80,66 @@ export class UsersComponent implements OnInit {
     this.store.setUser(user);
     this.router.navigate(['/details']);
   }
+
+  /*
+                ACHTUNG CHAT-GPT !!!!
+                (nicht getestet und kein Bock dazu)
+*/
+  checkAttendances(user: User): boolean {
+    // Get all dates from attendances that are in department "Feuerwaffe"
+    const dates = user.attendances
+      .filter((att) => att.department.title === 'Feuerwaffe')
+      .map((att) => new Date(att.date));
+
+    // Sort the dates in ascending order
+    dates.sort((a, b) => a.getTime() - b.getTime());
+
+    // Check if there are 18 dates within any 12-month period
+    if (dates.length >= 18) {
+      const startDate = new Date(dates[0]);
+      const endDate = new Date(dates[dates.length - 1]);
+
+      let count = 0;
+      for (const date of dates) {
+        if (date >= startDate && date <= endDate) {
+          count++;
+        }
+      }
+      if (count >= 18) {
+        return true;
+      }
+    }
+
+    // Check if there is a date in one month for 12 consecutive months
+    const consecutiveMonths = new Map<number, Set<number>>(); // Map<year, Set<month>>
+    for (const date of dates) {
+      const year = date.getFullYear();
+      const month = date.getMonth();
+
+      if (!consecutiveMonths.has(year)) {
+        consecutiveMonths.set(year, new Set<number>());
+      }
+      consecutiveMonths.get(year)!.add(month);
+
+      if (consecutiveMonths.get(year)!.size === 12) {
+        return true;
+      }
+    }
+
+    // If both conditions fail, return false
+    return false;
+  }
+
+  /*
+            NOCH MEHR CHAT-GPT
+            (scheint zu funktionieren)
+  */
+  hasBirthdayToday(user: User): boolean {
+    const birthday = new Date(user.birthday);
+    const today = new Date();
+    return (
+      birthday.getMonth() === today.getMonth() &&
+      birthday.getDate() === today.getDate()
+    );
+  }
 }

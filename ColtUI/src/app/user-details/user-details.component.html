@@ -94,7 +94,20 @@
       <div class="col flex flex-column justify-content-between">
         <div class="flex flex-column gap-2">
           <div class="text-xl font-bold">
-            <div>Status:</div>
+            <div
+              class="flex flex-row justify-content-between align-itmes-between"
+            >
+              <div>Status:</div>
+              <p-confirmDialog [closable]="false"></p-confirmDialog>
+              <p-button
+                *ngIf="isEditView()"
+                (click)="confirm($event)"
+                icon="pi pi-trash"
+                size="large"
+                [text]="true"
+                severity="danger"
+              ></p-button>
+            </div>
             <div *ngIf="isActive.getRawValue(); else inactive">
               <p-tag
                 class="text-2xl font-bold"
