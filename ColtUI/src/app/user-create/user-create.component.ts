@@ -16,7 +16,7 @@ import { KeyFilterModule } from 'primeng/keyfilter';
 import { ButtonModule } from 'primeng/button';
 import { CalendarModule } from 'primeng/calendar';
 import { ToastModule } from 'primeng/toast';
-import { MessageService } from 'primeng/api';
+import { MessageService, PrimeNGConfig } from 'primeng/api';
 
 @Component({
   selector: 'app-user-create',
@@ -36,6 +36,7 @@ import { MessageService } from 'primeng/api';
 })
 export class UserCreateComponent implements OnInit {
   constructor(
+    private primengConfig: PrimeNGConfig,
     private layoutComponent: LayoutComponent,
     private router: Router,
     private messageService: MessageService
@@ -54,6 +55,53 @@ export class UserCreateComponent implements OnInit {
 
   ngOnInit(): void {
     this.layoutComponent.cardHeader.update(() => 'Neues Mitglied anlegen');
+
+    this.primengConfig.setTranslation({
+      firstDayOfWeek: 1,
+      dayNames: [
+        'Sonntag',
+        'Montag',
+        'Dienstag',
+        'Mittwoch',
+        'Donnerstag',
+        'Freitag',
+        'Samstag',
+      ],
+      dayNamesShort: ['Son', 'Mon', 'Die', 'Mit', 'Don', 'Fre', 'Sam'],
+      dayNamesMin: ['So', 'Mo', 'Di', 'Mi', 'Do', 'Fr', 'Sa'],
+      monthNames: [
+        'Januar',
+        'Februar',
+        'März',
+        'April',
+        'Mai',
+        'Juni',
+        'Juli',
+        'August',
+        'September',
+        'Oktober',
+        'November',
+        'Dezember',
+      ],
+      monthNamesShort: [
+        'Jan',
+        'Feb',
+        'Mär',
+        'Apr',
+        'Mai',
+        'Jun',
+        'Jul',
+        'Aug',
+        'Sep',
+        'Okt',
+        'Nov',
+        'Dez',
+      ],
+      today: 'Heute',
+      clear: 'Leeren',
+      dateFormat: 'dd.mm.yy',
+      weekHeader: 'Wo',
+    });
   }
 
   onAbort(): void {
