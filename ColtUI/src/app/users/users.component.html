@@ -19,18 +19,23 @@
         <div
           class="col-3 flex flex-column align-items-center sm:align-items-start gap-3"
         >
-          <div *ngIf="hasBirthdayToday(user)" style="color: rgb(242, 8, 242)">
-            <i class="pi pi-star text-2xl"></i>
-            <p style="display: inline">&nbsp; Heute Geburtstag!</p>
-          </div>
-
           <div class="text-2xl font-bold text-900">
             {{ user.first_name }} {{ user.last_name }}
           </div>
-          <div>
+          <div class="flex">
+            <div
+              *ngIf="hasBirthdayToday(user)"
+              style="color: rgb(242, 8, 242)"
+              class="mr-2"
+            >
+              <i
+                class="pi pi-gift text-2xl"
+                pTooltip="Hat heute Geburtstag!"
+              ></i>
+            </div>
             <p-tag
               *ngIf="user.is_active; else inactive"
-              value="Aktives Mitglied"
+              value="Aktiv"
               severity="info"
               class="mr-2"
             ></p-tag>
@@ -57,7 +62,7 @@
         </div>
 
         <!-- Second Column -->
-        <div class="col-6 flex flex-column justify-content-start text-900">
+        <div class="col-3 flex flex-column justify-content-start text-900">
           <p class="text-2xl font-bold">Abteilungen</p>
           <div *ngFor="let department of user.departments" class="text-xl">
             - {{ department.title }}
@@ -65,25 +70,31 @@
         </div>
 
         <!-- Third Column -->
-        <div class="col flex flex-column align-items-start gap-3">
-          <p-dropdown
-            *ngIf="user.departments.length > 1"
-            [options]="user.departments"
-            [formControl]="selectedDepartment"
-            placeholder="Abteilung wählen"
-            optionLabel="title"
-          ></p-dropdown>
-          <p-button
-            label="Heute anwesend"
-            icon="pi pi-stopwatch"
-            (click)="createAttendanceToday(user)"
-          ></p-button>
-          <p-button
-            [styleClass]="'p-button-text'"
-            label="Details"
-            icon="pi pi-book"
-            (click)="onDetails(user)"
-          ></p-button>
+        <div class="col flex flex-column align-items-end gap-3">
+          <div class="flex">
+            <p-dropdown
+              *ngIf="user.departments.length > 1"
+              [options]="user.departments"
+              [formControl]="selectedDepartment"
+              placeholder="Abteilung wählen"
+              optionLabel="title"
+            ></p-dropdown>
+            <p-button
+              class="ml-3"
+              label="Heute anwesend"
+              icon="pi pi-stopwatch"
+              (click)="createAttendanceToday(user)"
+            ></p-button>
+          </div>
+          <div class="flex align-items-center">
+            <p-button
+              class="ml-8"
+              [styleClass]="'p-button-text'"
+              label="Details"
+              icon="pi pi-book"
+              (click)="onDetails(user)"
+            ></p-button>
+          </div>
         </div>
       </div>
     </div>
