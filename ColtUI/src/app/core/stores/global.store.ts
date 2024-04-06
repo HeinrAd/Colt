@@ -12,6 +12,7 @@ import {
   Attendance,
   AttendanceCreate,
   AttendanceUpdate,
+  AttendanceUser,
   DefaultService,
   Department,
   DepartmentCreate,
@@ -27,8 +28,8 @@ export const GlobalStore = signalStore(
   withState({
     users: [] as User[],
     user: {} as User,
-    attendances: [] as Attendance[],
-    userAttendances: [] as Attendance[],
+    attendances: [] as AttendanceUser[],
+    userAttendances: [] as AttendanceUser[],
     attendance: {} as Attendance,
     departments: [] as Department[],
     department: {} as Department,
@@ -79,11 +80,9 @@ export const GlobalStore = signalStore(
         );
     },
     createNewAttendance(attendance: AttendanceCreate): void {
-      defaultService.createAttendance(attendance).subscribe((attendance) =>
-        patchState(store, {
-          attendances: [...store.attendances(), attendance],
-        })
-      );
+      defaultService
+        .createAttendance(attendance)
+        .subscribe(() => this.loadAttendances());
     },
     createNewDepartment(department: DepartmentCreate): void {
       defaultService.createDepartment(department).subscribe((department) =>
