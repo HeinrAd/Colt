@@ -43,8 +43,8 @@ class Department(Base):
     __tablename__ = "departments"
 
     id = Column(Integer, primary_key=True)
-    title = Column(String, index=True)
-    description = Column(String, index=True)
+    title = Column(String, nullable=False)
+    description = Column(String, nullable=False)
     price = Column(Integer, nullable=False)
 
     users = relationship("User", secondary=user_departments, back_populates="departments")

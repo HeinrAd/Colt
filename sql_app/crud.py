@@ -31,7 +31,7 @@ def update_user(db: Session, user_id: int, user_update: schemas.UserUpdate):
         models.User.id == user_id).first()
 
     if db_user:
-        for field, value in user_update.model_dump().items():
+        for field, value in user_update.items():
             setattr(db_user, field, value)
 
         db.commit()
@@ -77,7 +77,7 @@ def update_attendance(db: Session, attendance_id: int, attendance_data: schemas.
         models.Attendance.id == attendance_id).first()
 
     if db_attendance:
-        for key, value in attendance_data.model_dump().items():
+        for key, value in attendance_data.items():
             setattr(db_attendance, key, value)
 
         db.commit()
@@ -118,7 +118,7 @@ def update_department(db: Session, department_id: int, department_data: schemas.
         models.Department.id == department_id).first()
 
     if db_department:
-        for key, value in department_data.model_dump().items():
+        for key, value in department_data.items():
             setattr(db_department, key, value)
 
         db.commit()

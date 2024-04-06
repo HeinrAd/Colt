@@ -128,7 +128,7 @@ def update_department(department_id: int, department_update: schemas.DepartmentU
     department = crud.get_department_by_id(db, department_id)
     if not department:
         raise HTTPException(status_code=404, detail="Department not found")
-
+ 
     return crud.update_department(db, department_id, department_update.dict(exclude_unset=True))
 
 @app.delete("/departments/{department_id}", response_model=schemas.DeleteResponse)
