@@ -120,7 +120,7 @@ export class UserDetailsComponent implements OnInit {
     });
   }
 
-  confirm(event: Event) {
+  confirmDelete(event: Event) {
     this.confirmationService.confirm({
       target: event.target as EventTarget,
       message: 'Wollen Sie das Mitglied wirklich löschen?',

@@ -93,40 +93,20 @@
       <!-- Third Column -->
       <div class="col flex flex-column justify-content-between">
         <div class="flex flex-column gap-2">
-          <div class="text-xl font-bold">
-            <div
-              class="flex flex-row justify-content-between align-itmes-between"
-            >
-              <div>Status:</div>
-              <p-confirmDialog [closable]="false"></p-confirmDialog>
-              <p-button
-                *ngIf="isEditView()"
-                (click)="confirm($event)"
-                icon="pi pi-trash"
-                size="large"
-                [text]="true"
-                severity="danger"
-              ></p-button>
-            </div>
+          <div class="text-xl font-bold">Status:</div>
+          <div class="flex align-items-center">
+            <p-inputSwitch
+              class="mr-2"
+              [formControl]="isActive"
+              *ngIf="isEditView()"
+            ></p-inputSwitch>
             <div *ngIf="isActive.getRawValue(); else inactive">
-              <p-tag
-                class="text-2xl font-bold"
-                value="Aktiv"
-                severity="success"
-              ></p-tag>
+              <p-tag value="Aktiv" severity="success"></p-tag>
             </div>
             <ng-template #inactive>
-              <p-tag
-                class="text-2xl font-bold"
-                value="Inaktiv"
-                severity="danger"
-              ></p-tag>
+              <p-tag value="Inaktiv" severity="danger"></p-tag>
             </ng-template>
           </div>
-          <p-inputSwitch
-            [formControl]="isActive"
-            *ngIf="isEditView()"
-          ></p-inputSwitch>
         </div>
         <div *ngIf="!isEditView()">
           <div class="text-xl font-bold mb-3">Abteilungen:</div>
@@ -184,7 +164,7 @@
             (click)="onBack()"
             *ngIf="!isEditView()"
           ></p-button>
-          <span *ngIf="isEditView()">
+          <span *ngIf="isEditView()" class="flex align-items-center">
             <p-button
               class="mr-2"
               label="Speichern"
@@ -193,14 +173,24 @@
               (click)="onSave()"
             ></p-button>
             <p-button
-              label="Abbrechen"
-              severity="danger"
-              icon="pi pi-times"
+              label="Zurück"
+              icon="pi pi-arrow-left"
+              [text]="true"
               (click)="toggleEdit()"
-            ></p-button>
+            />
+            <p-button
+              *ngIf="isEditView()"
+              (click)="confirmDelete($event)"
+              icon="pi pi-trash"
+              size="large"
+              [text]="true"
+              severity="danger"
+            />
           </span>
         </div>
       </div>
     </div>
   </div>
 </div>
+
+<p-confirmDialog [closable]="false"></p-confirmDialog>
