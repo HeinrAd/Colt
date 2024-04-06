@@ -31,7 +31,7 @@ def update_user(db: Session, user_id: int, user_update: schemas.UserUpdate):
         models.User.id == user_id).first()
 
     if db_user:
-        for field, value in user_update.items():
+        for field, value in user_update.model_dump().items():
             setattr(db_user, field, value)
 
         db.commit()
