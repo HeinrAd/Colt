@@ -81,7 +81,7 @@
         required="true"
         [formControl]="price"
       />
-      <p-confirmPopup></p-confirmPopup>
+      <p-confirmDialog [closable]="false"></p-confirmDialog>
       <p-button
         (click)="confirm($event)"
         icon="pi pi-trash"

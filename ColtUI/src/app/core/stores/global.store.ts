@@ -62,7 +62,6 @@ export const GlobalStore = signalStore(
       const newUser = store.users().find((user) => user.id === id);
       patchState(store, { user: newUser });
     },
-    // getDepartmentById(id: number): void {},
 
     getAttendancesByUserId(id: number): void {
       defaultService
@@ -71,7 +70,6 @@ export const GlobalStore = signalStore(
           patchState(store, { userAttendances: attendances })
         );
     },
-    // getAttendanceById(id: number): void {},
 
     createNewUser(user: UserCreate): void {
       defaultService
@@ -108,6 +106,7 @@ export const GlobalStore = signalStore(
         })
       );
     },
+
     changeAttendance(id: number, attendance: AttendanceUpdate): void {
       defaultService
         .updateAttendance(id, attendance)
@@ -124,6 +123,7 @@ export const GlobalStore = signalStore(
           })
         );
     },
+
     changeDepartment(id: number, department: DepartmentUpdate): void {
       defaultService
         .updateDepartment(id, department)
@@ -151,6 +151,7 @@ export const GlobalStore = signalStore(
         )
       );
     },
+
     deleteAttendance(id: number): void {
       defaultService.deleteAttendance(id).subscribe(
         (deletedResponse) => (
@@ -165,20 +166,51 @@ export const GlobalStore = signalStore(
     },
 
     deleteDepartment(id: number): void {
-      defaultService.deleteDepartment(id).subscribe(
-        (deletedResponse) => (
+      defaultService.deleteDepartment(id).subscribe(() =>
+        patchState(store, {
+          departments: store
+            .departments()
+            .filter((department) => department.id != id),
+        })
+      );
+    },
+
+    createDepartmentOfUser(userId: number, departmentId: number): void {
+      defaultService
+        .createUserDepartment(userId, departmentId)
+        .subscribe((departmentsResponse) =>
           patchState(store, {
+            user: {
+              ...store.user(),
+              departments: departmentsResponse,
+            },
+          })
+        );
+    },
+
+    deleteDepartmentOfUser(userId: number, departmentId: number): void {
+      defaultService.deleteUserDepartment(userId, departmentId).subscribe(() =>
+        patchState(store, {
+          user: {
+            ...store.user(),
             departments: store
-              .departments()
-              .filter((department) => department.id != id),
-          }),
-          console.log('Deleted Department: ', deletedResponse)
-        )
+              .user()
+              .departments.filter((dep) => dep.id != departmentId),
+          },
+        })
       );
     },
 
     setUser(newUser: User): void {
       patchState(store, { user: newUser });
+    },
+
+    updateUser(id: number, user: UserUpdate): void {
+      defaultService.updateUser(id, user).subscribe((updatedUser) =>
+        patchState(store, {
+          user: updatedUser,
+        })
+      );
     },
 
     setDepartment(newDepartment: Department): void {

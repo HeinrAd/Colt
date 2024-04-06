@@ -10,7 +10,7 @@ import { LayoutComponent } from '../core/layout/layout.component';
 import { GlobalStore } from '../core/stores/global.store';
 import { Router } from '@angular/router';
 import { FormControl, ReactiveFormsModule } from '@angular/forms';
-import { Department, UserUpdate } from '../shared';
+import { Department, User, UserUpdate } from '../shared';
 
 // PrimeNG imports
 import { TagModule } from 'primeng/tag';
@@ -19,6 +19,8 @@ import { InputTextModule } from 'primeng/inputtext';
 import { KeyFilterModule } from 'primeng/keyfilter';
 import { CalendarModule } from 'primeng/calendar';
 import { InputSwitchModule } from 'primeng/inputswitch';
+import { ConfirmDialogModule } from 'primeng/confirmdialog';
+import { ConfirmationService, MessageService } from 'primeng/api';
 
 @Component({
   selector: 'app-user-details',
@@ -32,7 +34,9 @@ import { InputSwitchModule } from 'primeng/inputswitch';
     KeyFilterModule,
     CalendarModule,
     InputSwitchModule,
+    ConfirmDialogModule,
   ],
+  providers: [ConfirmationService, MessageService],
   templateUrl: './user-details.component.html',
   styleUrl: './user-details.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
@@ -40,7 +44,9 @@ import { InputSwitchModule } from 'primeng/inputswitch';
 export class UserDetailsComponent implements OnInit {
   constructor(
     private layoutComponent: LayoutComponent,
-    private router: Router
+    private router: Router,
+    private confirmationService: ConfirmationService,
+    private messageService: MessageService
   ) {}
 
   readonly store = inject(GlobalStore);
@@ -62,16 +68,41 @@ export class UserDetailsComponent implements OnInit {
     this.layoutComponent.cardHeader.update(() => 'Mitglieder-Details');
   }
 
+  confirm(event: Event) {
+    this.confirmationService.confirm({
+      target: event.target as EventTarget,
+      message: 'Wollen Sie das Mitglied wirklich löschen?',
+      header: '',
+      icon: 'pi pi-exclamation-triangle',
+      acceptIcon: 'none',
+      rejectIcon: 'none',
+      acceptLabel: 'Ja',
+      rejectLabel: 'Nein',
+      rejectButtonStyleClass: 'p-button-text',
+      accept: () => {
+        this.messageService.add({
+          severity: 'info',
+          summary: 'Confirmed',
+          detail: 'Mitglied wurde gelöscht!',
+          life: 3000,
+        });
+        this.onDelete(this.store.user());
+        this.onBack();
+      },
+      reject: () => {
+        this.messageService.add({
+          severity: 'error',
+          summary: 'Rejected',
+          detail: 'Löschen abgebrochen',
+          life: 3000,
+        });
+      },
+    });
+  }
+
   onBack(): void {
     this.router.navigate(['/mitglieder']);
-  }
-
-  onAttendance(): void {
-    this.router.navigate(['/anwesenheiten']);
-  }
-
-  onDepartments(): void {
-    this.router.navigate(['/abteilungen']);
+    this.store.loadUsers();
   }
 
   toggleEdit(): void {
@@ -80,7 +111,12 @@ export class UserDetailsComponent implements OnInit {
       : this.isEditView.update(() => true);
   }
 
-  onChangeSwitchDepartment(i: number): void {}
+  findDepartment(department: Department): boolean {
+    if (this.store.user().departments.find((dep) => dep.id === department.id)) {
+      return true;
+    }
+    return false;
+  }
 
   onSave(): void {
     if (
@@ -109,5 +145,19 @@ export class UserDetailsComponent implements OnInit {
 
     this.store.changeUser(this.store.user().id, newUser);
     this.isEditView.update(() => false);
+  }
+
+  onDelete(user: User): void {
+    this.store.deleteUser(user.id);
+  }
+
+  onSubscribeDepartment(department: Department): void {
+    this.store.createDepartmentOfUser(this.store.user().id, department.id);
+    this.store.updateUser(this.store.user().id, this.store.user());
+  }
+
+  onUnsubscribeDepartment(department: Department): void {
+    this.store.deleteDepartmentOfUser(this.store.user().id, department.id);
+    this.store.updateUser(this.store.user().id, this.store.user());
   }
 }

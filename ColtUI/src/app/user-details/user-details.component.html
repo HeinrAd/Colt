@@ -3,7 +3,7 @@
     <div class="flex flex-column sm:flex-row gap-4 justify-content-between">
       <!-- First Column -->
       <div
-        class="col-3 flex flex-column text-xl font-bold justify-content-between align-items-start gap-4"
+        class="col-2 flex flex-column text-xl font-bold justify-content-between align-items-start gap-4"
       >
         <div>Vorname:</div>
         <div>Nachname:</div>
@@ -91,10 +91,23 @@
         />
       </div>
       <!-- Third Column -->
-      <div class="col-4 flex flex-column justify-content-between">
+      <div class="col flex flex-column justify-content-between">
         <div class="flex flex-column gap-2">
           <div class="text-xl font-bold">
-            <div>Status:</div>
+            <div
+              class="flex flex-row justify-content-between align-itmes-between"
+            >
+              <div>Status:</div>
+              <p-confirmDialog [closable]="false"></p-confirmDialog>
+              <p-button
+                *ngIf="isEditView()"
+                (click)="confirm($event)"
+                icon="pi pi-trash"
+                size="large"
+                [text]="true"
+                severity="danger"
+              ></p-button>
+            </div>
             <div *ngIf="isActive.getRawValue(); else inactive">
               <p-tag
                 class="text-2xl font-bold"
@@ -116,9 +129,11 @@
           ></p-inputSwitch>
         </div>
         <div *ngIf="!isEditView()">
-          <div class="text-xl font-bold mb-2">Abteilungen:</div>
+          <div class="text-xl font-bold mb-3">Abteilungen:</div>
           <div *ngFor="let department of store.user().departments">
-            <div class="text-xl mb-2">{{ department.title }}</div>
+            <div class="text-xl mb-2">
+              <i class="pi pi-angle-right mr-2"></i>{{ department.title }}
+            </div>
           </div>
         </div>
         <div *ngIf="isEditView()" class="mb-4">
@@ -128,34 +143,45 @@
             class="flex flex-row justify-content-start align-items-center"
           >
             <p-button
-              *ngIf="!store.user().departments.includes(department)"
+              *ngIf="!findDepartment(department)"
               icon="pi pi-check"
               [rounded]="true"
               [text]="true"
               severity="success"
+              (click)="onSubscribeDepartment(department)"
             ></p-button>
             <p-button
-              *ngIf="store.user().departments.includes(department)"
+              *ngIf="findDepartment(department)"
               icon="pi pi-times"
               [rounded]="true"
               [text]="true"
               severity="danger"
+              (click)="onUnsubscribeDepartment(department)"
             ></p-button>
-            <div class="text-xl ml-2">{{ department.title }}</div>
+            <div
+              *ngIf="!findDepartment(department)"
+              class="text-xl ml-2 text-300"
+            >
+              {{ department.title }}
+            </div>
+            <div *ngIf="findDepartment(department)" class="text-xl ml-2">
+              {{ department.title }}
+            </div>
           </div>
         </div>
-        <div class="flex flex-column">
+        <div class="flex flex-row">
           <p-button
-            *ngIf="!isEditView()"
-            class="mb-2"
-            label="Anwesenheiten"
-            icon="pi pi-calendar"
-            (onClick)="onAttendance()"
-          ></p-button>
-          <p-button
+            class="mr-2"
             label="Bearbeiten"
             icon="pi pi-pencil"
             (click)="toggleEdit()"
+            *ngIf="!isEditView()"
+          ></p-button>
+          <p-button
+            label="Zurück"
+            icon="pi pi-arrow-left"
+            [text]="true"
+            (click)="onBack()"
             *ngIf="!isEditView()"
           ></p-button>
           <span *ngIf="isEditView()">
