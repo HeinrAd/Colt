@@ -17,6 +17,8 @@ import { DropdownModule } from 'primeng/dropdown';
 import { DividerModule } from 'primeng/divider';
 import { AttendanceCreate, User } from '../shared';
 import { Router } from '@angular/router';
+import { ToastModule } from 'primeng/toast';
+import { MessageService } from 'primeng/api';
 
 @Component({
   selector: 'app-users',
@@ -30,7 +32,9 @@ import { Router } from '@angular/router';
     DialogModule,
     DropdownModule,
     DividerModule,
+    ToastModule,
   ],
+  providers: [MessageService],
   templateUrl: './users.component.html',
   styleUrl: './users.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
@@ -38,7 +42,8 @@ import { Router } from '@angular/router';
 export class UsersComponent implements OnInit {
   constructor(
     private layoutComponent: LayoutComponent,
-    private router: Router
+    private router: Router,
+    private messageService: MessageService
   ) {}
 
   readonly store = inject(GlobalStore);
@@ -70,6 +75,11 @@ export class UsersComponent implements OnInit {
       department_id: departmentId,
     };
     this.store.createNewAttendance(newAttendance);
+    this.messageService.add({
+      severity: 'success',
+      summary: 'Erfolg',
+      detail: `Eintrag für ${user.first_name} ${user.last_name} erstellt`,
+    });
   }
 
   onCreateUser(): void {
