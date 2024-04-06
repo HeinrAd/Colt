@@ -64,14 +64,7 @@ export class UserDetailsComponent implements OnInit {
 
   onBack(): void {
     this.router.navigate(['/mitglieder']);
-  }
-
-  onAttendance(): void {
-    this.router.navigate(['/anwesenheiten']);
-  }
-
-  onDepartments(): void {
-    this.router.navigate(['/abteilungen']);
+    this.store.loadUsers();
   }
 
   toggleEdit(): void {
@@ -80,7 +73,12 @@ export class UserDetailsComponent implements OnInit {
       : this.isEditView.update(() => true);
   }
 
-  onChangeSwitchDepartment(i: number): void {}
+  findDepartment(department: Department): boolean {
+    if (this.store.user().departments.find((dep) => dep.id === department.id)) {
+      return true;
+    }
+    return false;
+  }
 
   onSave(): void {
     if (
@@ -109,5 +107,15 @@ export class UserDetailsComponent implements OnInit {
 
     this.store.changeUser(this.store.user().id, newUser);
     this.isEditView.update(() => false);
+  }
+
+  onSubscribeDepartment(department: Department): void {
+    this.store.createDepartmentOfUser(this.store.user().id, department.id);
+    this.store.updateUser(this.store.user().id, this.store.user());
+  }
+
+  onUnsubscribeDepartment(department: Department): void {
+    this.store.deleteDepartmentOfUser(this.store.user().id, department.id);
+    this.store.updateUser(this.store.user().id, this.store.user());
   }
 }

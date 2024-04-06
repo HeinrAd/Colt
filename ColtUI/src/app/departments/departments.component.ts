@@ -24,7 +24,7 @@ import { InputTextModule } from 'primeng/inputtext';
 import { KeyFilterModule } from 'primeng/keyfilter';
 import { InputSwitchModule } from 'primeng/inputswitch';
 import { DropdownModule } from 'primeng/dropdown';
-import { ConfirmPopupModule } from 'primeng/confirmpopup';
+import { ConfirmDialogModule } from 'primeng/confirmdialog';
 import { ConfirmationService, MessageService } from 'primeng/api';
 
 @Component({
@@ -40,7 +40,7 @@ import { ConfirmationService, MessageService } from 'primeng/api';
     KeyFilterModule,
     ReactiveFormsModule,
     DropdownModule,
-    ConfirmPopupModule,
+    ConfirmDialogModule,
   ],
   providers: [ConfirmationService, MessageService],
   templateUrl: './departments.component.html',
@@ -104,7 +104,13 @@ export class DepartmentsComponent implements OnInit {
     this.confirmationService.confirm({
       target: event.target as EventTarget,
       message: 'Wollen Sie die Abteilung wirklich löschen?',
+      header: '',
       icon: 'pi pi-exclamation-triangle',
+      acceptIcon: 'none',
+      rejectIcon: 'none',
+      acceptLabel: 'Ja',
+      rejectLabel: 'Nein',
+      rejectButtonStyleClass: 'p-button-text',
       accept: () => {
         this.messageService.add({
           severity: 'info',
