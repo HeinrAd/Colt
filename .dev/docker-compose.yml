@@ -1,12 +1,12 @@
 version: '3.8'
 services:
   backend: 
-    image: alpine:latest  
+    image: python:3.9-alpine  
     working_dir: /app 
     command: >
-     sh -c "cp sql_app/backend_setup.sh ./ 
-     && chmod 766 backend_setup.sh 
-     && ./backend_setup.sh 
+     sh -c "cp sql_app/backend_setup_win.sh ./ 
+     && chmod 766 backend_setup_win.sh 
+     && ./backend_setup_win.sh 
      && tail -f /dev/null"
     ports:
       - "8000:8000"  # Map Uvicorn's default port
