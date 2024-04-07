@@ -1,4 +1,5 @@
 import {
+  CSP_NONCE,
   ChangeDetectionStrategy,
   Component,
   OnInit,
@@ -198,6 +199,7 @@ export class UserDetailsComponent implements OnInit {
       house_number: this.houseNumber.getRawValue()!,
       postcode: this.postcode.getRawValue()!,
       city: this.city.getRawValue()!,
+      is_active: this.isActive.getRawValue()!,
     };
 
     this.store.changeUser(this.store.user().id, newUser);

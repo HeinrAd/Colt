@@ -137,6 +137,7 @@ class UserUpdate(UserBase):
     house_number: int
     postcode: int
     city: str
+    is_active: bool
 
 class DepartmentUsers(Department):
     users: list[UserShow]
