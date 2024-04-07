@@ -188,32 +188,3 @@ def use_route_names_as_operation_ids(app: FastAPI) -> None:
 
 
 use_route_names_as_operation_ids(app)
-
-# @app.post("/user_departments/", response_model=schemas.UserDepartment)
-# def create_user_department(user_department: schemas.UserDepartmentCreate, db: Session = Depends(get_db)):
-#     return crud.create_user_department(db, user_department)
-# @app.get("/user_departments/{user_department_id}", response_model=schemas.UserDepartment)
-# def read_user_department(user_department_id: int, db: Session = Depends(get_db)):
-#     user_department = crud.get_user_department_by_id(db, user_department_id)
-#     if not user_department:
-#         raise HTTPException(
-#             status_code=404, detail="User Department not found")
-#     return user_department
-
-# @app.put("/user_departments/{user_department_id}", response_model=schemas.UserDepartment)
-# def update_user_department(user_department_id: int, user_department_update: schemas.UserDepartmentUpdate, db: Session = Depends(get_db)):
-#     user_department = crud.get_user_department_by_id(db, user_department_id)
-#     if not user_department:
-#         raise HTTPException(
-#             status_code=404, detail="User Department not found")
-
-#     return crud.update_user_department(db, user_department_id, user_department_update.dict(exclude_unset=True))
-
-# @app.delete("/user_departments/{user_department_id}", response_model=schemas.DeleteResponse)
-# def delete_user_department(user_department_id: int, db: Session = Depends(get_db)):
-#     user_department = crud.get_user_department_by_id(db, user_department_id)
-#     if not user_department:
-#         raise HTTPException(
-#             status_code=404, detail="User Department not found")
-
-#     return crud.delete_user_department(db, user_department_id)
