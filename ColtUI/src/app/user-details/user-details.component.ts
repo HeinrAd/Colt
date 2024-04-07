@@ -1,4 +1,5 @@
 import {
+  CSP_NONCE,
   ChangeDetectionStrategy,
   Component,
   OnInit,
@@ -214,5 +215,10 @@ export class UserDetailsComponent implements OnInit {
 
   onUnsubscribeDepartment(department: Department): void {
     this.store.deleteDepartmentOfUser(this.store.user().id, department.id);
+  }
+
+  switchActiveStatus(): void {
+    this.store.user().is_active = !this.store.user().is_active;
+    console.log('Set to ', this.store.user().is_active);
   }
 }
