@@ -20,5 +20,6 @@ export interface UserUpdate {
     house_number: number;
     postcode: number;
     city: string;
+    is_active: boolean;
 }
 
