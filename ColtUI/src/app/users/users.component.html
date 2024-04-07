@@ -36,15 +36,15 @@
               severity="info"
               class="mr-2"
             ></p-tag>
+            <ng-template #inactive
+              ><p-tag value="Inaktiv" severity="danger" class="mr-2"></p-tag
+            ></ng-template>
             <p-tag
               *ngIf="checkAttendances(user)"
               value="Kaufberechtigt"
               severity="success"
             ></p-tag>
           </div>
-          <ng-template #inactive
-            ><p-tag value="Inaktiv" severity="danger"></p-tag
-          ></ng-template>
           <div class="flex flex-row text-xl" *ngIf="user.departments[0]">
             <div class="font-bold mr-3">Beitrag:</div>
             <div *ngIf="!user.departments[1]">

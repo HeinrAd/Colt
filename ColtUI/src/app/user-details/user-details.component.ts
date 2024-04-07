@@ -199,6 +199,7 @@ export class UserDetailsComponent implements OnInit {
       house_number: this.houseNumber.getRawValue()!,
       postcode: this.postcode.getRawValue()!,
       city: this.city.getRawValue()!,
+      is_active: this.isActive.getRawValue()!,
     };
 
     this.store.changeUser(this.store.user().id, newUser);
@@ -215,10 +216,5 @@ export class UserDetailsComponent implements OnInit {
 
   onUnsubscribeDepartment(department: Department): void {
     this.store.deleteDepartmentOfUser(this.store.user().id, department.id);
-  }
-
-  switchActiveStatus(): void {
-    this.store.user().is_active = !this.store.user().is_active;
-    console.log('Set to ', this.store.user().is_active);
   }
 }

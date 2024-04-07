@@ -99,7 +99,6 @@
               class="mr-2"
               [formControl]="isActive"
               *ngIf="isEditView()"
-              (onChange)="switchActiveStatus()"
             ></p-inputSwitch>
             <div *ngIf="isActive.getRawValue(); else inactive">
               <p-tag value="Aktiv" severity="success"></p-tag>
