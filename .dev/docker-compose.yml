@@ -12,3 +12,4 @@ services:
       - "8000:8000"  # Map Uvicorn's default port
     volumes:
       - '../sql_app:/app/sql_app:cached'
+      - '../sql_app.db:/app/sql_app.db'
