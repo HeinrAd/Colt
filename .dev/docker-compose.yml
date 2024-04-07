@@ -1,18 +1,13 @@
 version: '3.8'
 services:
-  frontend:
-    image: node:18
-    working_dir: /app 
-    command: tail -f /dev/null
-    ports:
-      - "80:4200"  # Map Angular's default port
-    volumes:
-      - '../ColtUI:/app/ColtUI:cached'
-
   backend: 
     image: alpine:latest  
     working_dir: /app 
-    command: tail -f /dev/null
+    command: >
+     sh -c "cp sql_app/backend_setup.sh ./ 
+     && chmod 766 backend_setup.sh 
+     && ./backend_setup.sh 
+     && tail -f /dev/null"
     ports:
       - "8000:8000"  # Map Uvicorn's default port
     volumes:
