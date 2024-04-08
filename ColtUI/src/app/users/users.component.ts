@@ -52,31 +52,32 @@ export class UsersComponent implements OnInit {
 
   visible = signal<boolean>(false);
   progressBow = signal<number>(50);
-  selectedDepartment = new FormControl();
-
-  showDialog() {
-    this.visible.update(() => true);
-  }
+  selectedDepartment = new FormControl<any | null>(null);
 
   ngOnInit(): void {
+    // Setzen der Überschrift in der überlagernden Komponente
     this.layoutComponent.cardHeader.update(() => 'Mitglieder');
   }
 
+  // Shortcut für die Erzeugung einer neuen Anwesenheit mit einem Klick
   createAttendanceToday(user: User): void {
-    let departmentId = user.departments[0].id ?? 0;
-    if (departmentId == 0) {
-      return;
-    }
+    // Setzt die Abteilung für die eine Anwesenheit angelegt wird
+    let departmentId = user.departments[0].id;
+
+    // Wenn das Mitglied mehrere Abteilungen hat, wird die Auswahl aus dem Dropdown gewertet
     if (user.departments.length > 1 && this.selectedDepartment != null) {
       departmentId = this.selectedDepartment.getRawValue().id;
     }
 
+    // Anlegen einer neuen Anwesenheit
     const newAttendance: AttendanceCreate = {
       date: new Date().toISOString(),
       user_id: user.id,
       department_id: departmentId,
     };
     this.store.createNewAttendance(newAttendance);
+
+    // Erzeugen einer Toast-Message zur Bestätigung
     this.messageService.add({
       severity: 'success',
       summary: 'Erfolg',
@@ -84,26 +85,28 @@ export class UsersComponent implements OnInit {
     });
   }
 
+  // Weiterleitung auf die Seite zur Erstellung eines neuen Mitglieds
   onCreateUser(): void {
     this.router.navigate(['/mitgliederstellung']);
   }
 
+  // Weiterleitung auf die Detail-Seite eines Mitglieds und setzt das ausgewählte Mitglied im Store
   onDetails(user: User): void {
     this.store.setUser(user);
     this.router.navigate(['/details']);
   }
 
-
+  // Anwesenheiten prüfen, um die Berechtigung zum Erwerb einer Feuerwaffe abzufragen
   checkAttendances(user: User): boolean {
-    // Get all dates from attendances that are in department "Feuerwaffe"
+    // Lade alle Anweseheiten des Users in der Abteilung "Feuerwaffen"
     const dates = user.attendances
       .filter((att) => att.department.title === 'Feuerwaffen')
       .map((att) => new Date(att.date));
 
-    // Sort the dates in ascending order
+    // Sortiere die Einträge nach Datum
     dates.sort((a, b) => a.getTime() - b.getTime());
-    
-    // Check if there are 18 dates within any 12-month period
+
+    // Prüfen, ob 18 Anwesenheiten innerhalb der letzten 12 Monate liegen
     if (dates.length >= 18) {
       const startDate = new Date(dates[0]);
       const endDate = new Date(dates[dates.length - 1]);
@@ -116,11 +119,11 @@ export class UsersComponent implements OnInit {
       }
       if (count >= 18) {
         return true;
-      } 
+      }
     }
 
-    // Check if there is a date in one month for 12 consecutive months
-    const consecutiveMonths = new Map<number, Set<number>>(); // Map<year, Set<month>>
+    // Prüfen, ob in den letzten 12 Monaten min. je eine Anwesenheit liegt
+    const consecutiveMonths = new Map<number, Set<number>>();
     for (const date of dates) {
       const year = date.getFullYear();
       const month = date.getMonth();
@@ -129,22 +132,22 @@ export class UsersComponent implements OnInit {
         consecutiveMonths.set(year, new Set<number>());
       }
       consecutiveMonths.get(year)!.add(month);
-    
     }
     let currentYear = new Date().getFullYear();
     if (consecutiveMonths.size === 0) {
-      return false
-    }
-    else if (consecutiveMonths.size < 2) {
+      return false;
+    } else if (consecutiveMonths.size < 2) {
       return consecutiveMonths.get(currentYear)!.size >= 12;
     } else {
-      return consecutiveMonths.get(currentYear)!.size + consecutiveMonths.get(currentYear -1)!.size >= 12;
+      return (
+        consecutiveMonths.get(currentYear)!.size +
+          consecutiveMonths.get(currentYear - 1)!.size >=
+        12
+      );
     }
-  
-    // If both conditions fail, return false
-    return false;
   }
 
+  // Prüfen ob das Mitglied heute Geburtstag hat, wenn ja wird dies in der Oberfläche angezeigt
   hasBirthdayToday(user: User): boolean {
     const birthday = new Date(user.birthday);
     const today = new Date();
