@@ -1,5 +1,4 @@
 import {
-  CSP_NONCE,
   ChangeDetectionStrategy,
   Component,
   OnInit,
@@ -21,11 +20,7 @@ import { KeyFilterModule } from 'primeng/keyfilter';
 import { CalendarModule } from 'primeng/calendar';
 import { InputSwitchModule } from 'primeng/inputswitch';
 import { ConfirmDialogModule } from 'primeng/confirmdialog';
-import {
-  ConfirmationService,
-  MessageService,
-  PrimeNGConfig,
-} from 'primeng/api';
+import { ConfirmationService, PrimeNGConfig } from 'primeng/api';
 
 @Component({
   selector: 'app-user-details',
@@ -41,7 +36,7 @@ import {
     InputSwitchModule,
     ConfirmDialogModule,
   ],
-  providers: [ConfirmationService, MessageService],
+  providers: [ConfirmationService],
   templateUrl: './user-details.component.html',
   styleUrl: './user-details.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
@@ -51,8 +46,7 @@ export class UserDetailsComponent implements OnInit {
     private primengConfig: PrimeNGConfig,
     private layoutComponent: LayoutComponent,
     private router: Router,
-    private confirmationService: ConfirmationService,
-    private messageService: MessageService
+    private confirmationService: ConfirmationService
   ) {}
 
   readonly store = inject(GlobalStore);
@@ -133,9 +127,9 @@ export class UserDetailsComponent implements OnInit {
       rejectLabel: 'Nein',
       rejectButtonStyleClass: 'p-button-text',
       accept: () => {
-        this.messageService.add({
+        this.layoutComponent.messageService.add({
           severity: 'info',
-          summary: 'Confirmed',
+          summary: 'Gelöscht',
           detail: 'Mitglied wurde gelöscht!',
           life: 3000,
         });
@@ -143,10 +137,10 @@ export class UserDetailsComponent implements OnInit {
         this.onBack();
       },
       reject: () => {
-        this.messageService.add({
+        this.layoutComponent.messageService.add({
           severity: 'error',
-          summary: 'Rejected',
-          detail: 'Löschen abgebrochen',
+          summary: 'Abgelehnt',
+          detail: 'Löschvorgang abgebrochen',
           life: 3000,
         });
       },
@@ -201,6 +195,13 @@ export class UserDetailsComponent implements OnInit {
       city: this.city.getRawValue()!,
       is_active: this.isActive.getRawValue()!,
     };
+
+    this.layoutComponent.messageService.add({
+      severity: 'info',
+      summary: 'Gespeichert',
+      detail: 'Mitglied wurde überschrieben!',
+      life: 3000,
+    });
 
     this.store.changeUser(this.store.user().id, newUser);
     this.isEditView.update(() => false);

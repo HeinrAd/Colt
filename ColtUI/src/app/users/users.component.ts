@@ -18,7 +18,6 @@ import { DividerModule } from 'primeng/divider';
 import { AttendanceCreate, User } from '../shared';
 import { Router } from '@angular/router';
 import { ToastModule } from 'primeng/toast';
-import { MessageService } from 'primeng/api';
 import { TooltipModule } from 'primeng/tooltip';
 
 @Component({
@@ -36,7 +35,6 @@ import { TooltipModule } from 'primeng/tooltip';
     ToastModule,
     TooltipModule,
   ],
-  providers: [MessageService],
   templateUrl: './users.component.html',
   styleUrl: './users.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
@@ -44,8 +42,7 @@ import { TooltipModule } from 'primeng/tooltip';
 export class UsersComponent implements OnInit {
   constructor(
     private layoutComponent: LayoutComponent,
-    private router: Router,
-    private messageService: MessageService
+    private router: Router
   ) {}
 
   readonly store = inject(GlobalStore);
@@ -77,7 +74,7 @@ export class UsersComponent implements OnInit {
       department_id: departmentId,
     };
     this.store.createNewAttendance(newAttendance);
-    this.messageService.add({
+    this.layoutComponent.messageService.add({
       severity: 'success',
       summary: 'Erfolg',
       detail: `Eintrag für ${user.first_name} ${user.last_name} erstellt`,
@@ -93,7 +90,6 @@ export class UsersComponent implements OnInit {
     this.router.navigate(['/details']);
   }
 
-
   checkAttendances(user: User): boolean {
     // Get all dates from attendances that are in department "Feuerwaffe"
     const dates = user.attendances
@@ -102,7 +98,7 @@ export class UsersComponent implements OnInit {
 
     // Sort the dates in ascending order
     dates.sort((a, b) => a.getTime() - b.getTime());
-    
+
     // Check if there are 18 dates within any 12-month period
     if (dates.length >= 18) {
       const startDate = new Date(dates[0]);
@@ -116,7 +112,7 @@ export class UsersComponent implements OnInit {
       }
       if (count >= 18) {
         return true;
-      } 
+      }
     }
 
     // Check if there is a date in one month for 12 consecutive months
@@ -129,20 +125,19 @@ export class UsersComponent implements OnInit {
         consecutiveMonths.set(year, new Set<number>());
       }
       consecutiveMonths.get(year)!.add(month);
-    
     }
     let currentYear = new Date().getFullYear();
     if (consecutiveMonths.size === 0) {
-      return false
-    }
-    else if (consecutiveMonths.size < 2) {
+      return false;
+    } else if (consecutiveMonths.size < 2) {
       return consecutiveMonths.get(currentYear)!.size >= 12;
     } else {
-      return consecutiveMonths.get(currentYear)!.size + consecutiveMonths.get(currentYear -1)!.size >= 12;
+      return (
+        consecutiveMonths.get(currentYear)!.size +
+          consecutiveMonths.get(currentYear - 1)!.size >=
+        12
+      );
     }
-  
-    // If both conditions fail, return false
-    return false;
   }
 
   hasBirthdayToday(user: User): boolean {

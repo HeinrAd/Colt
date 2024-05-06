@@ -10,12 +10,7 @@ import { GlobalStore } from '../core/stores/global.store';
 import { Router } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { FormControl, ReactiveFormsModule } from '@angular/forms';
-import {
-  Department,
-  DepartmentCreate,
-  DepartmentUpdate,
-  User,
-} from '../shared';
+import { Department, DepartmentCreate, DepartmentUpdate } from '../shared';
 
 // PrimeNg imports
 import { DividerModule } from 'primeng/divider';

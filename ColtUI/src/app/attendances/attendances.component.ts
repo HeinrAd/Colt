@@ -116,7 +116,7 @@ export class AttendancesComponent implements OnInit {
       department_id: this.selectedDepartment.getRawValue()!.id,
     };
     this.store.createNewAttendance(newAttandance);
-    this.messageService.add({
+    this.layoutComponent.messageService.add({
       severity: 'success',
       summary: 'Erfolg',
       detail: `Eintrag für ${this.selectedUser.getRawValue()?.first_name} ${
@@ -132,7 +132,7 @@ export class AttendancesComponent implements OnInit {
       message: `Möchten Sie die Anwesenheit wirklich löschen?`,
       icon: 'pi pi-exclamation-triangle',
       accept: () => {
-        this.messageService.add({
+        this.layoutComponent.messageService.add({
           severity: 'info',
           summary: 'Gelöscht',
           detail: 'Der Eintrag wurde gelöscht',
@@ -141,7 +141,7 @@ export class AttendancesComponent implements OnInit {
         this.store.deleteAttendance(id);
       },
       reject: () => {
-        this.messageService.add({
+        this.layoutComponent.messageService.add({
           severity: 'error',
           summary: 'Abgebrochen',
           detail: 'Der Vorgang wurde von Ihnen abgebrochen',

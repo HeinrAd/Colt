@@ -16,7 +16,7 @@ import { KeyFilterModule } from 'primeng/keyfilter';
 import { ButtonModule } from 'primeng/button';
 import { CalendarModule } from 'primeng/calendar';
 import { ToastModule } from 'primeng/toast';
-import { MessageService, PrimeNGConfig } from 'primeng/api';
+import { PrimeNGConfig } from 'primeng/api';
 
 @Component({
   selector: 'app-user-create',
@@ -29,7 +29,6 @@ import { MessageService, PrimeNGConfig } from 'primeng/api';
     CalendarModule,
     ToastModule,
   ],
-  providers: [MessageService],
   templateUrl: './user-create.component.html',
   styleUrl: './user-create.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
@@ -38,8 +37,7 @@ export class UserCreateComponent implements OnInit {
   constructor(
     private primengConfig: PrimeNGConfig,
     private layoutComponent: LayoutComponent,
-    private router: Router,
-    private messageService: MessageService
+    private router: Router
   ) {}
 
   readonly store = inject(GlobalStore);
@@ -139,7 +137,7 @@ export class UserCreateComponent implements OnInit {
 
     this.store.createNewUser(newUser);
 
-    this.messageService.add({
+    this.layoutComponent.messageService.add({
       severity: 'success',
       summary: 'Erfolg',
       detail: `Neues Mitglied ${newUser.first_name} ${newUser.last_name} angelegt`,
@@ -153,5 +151,7 @@ export class UserCreateComponent implements OnInit {
     this.houseNumber.setValue(null);
     this.postcode.setValue(null);
     this.city.setValue('');
+
+    this.router.navigate(['/mitglieder']);
   }
 }
