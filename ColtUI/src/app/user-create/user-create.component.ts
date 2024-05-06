@@ -121,6 +121,11 @@ export class UserCreateComponent implements OnInit {
     ) {
       return;
     }
+
+    this.birthday
+      .getRawValue()!
+      .setHours(this.birthday.getRawValue()!.getHours() + 12);
+
     const newUser: UserCreate = {
       first_name: this.firstName.getRawValue()!,
       last_name: this.lastName.getRawValue()!,

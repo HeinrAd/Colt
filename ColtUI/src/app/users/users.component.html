@@ -15,7 +15,7 @@
       <div
         class="flex flex-column sm:flex-row justify-content-between align-items-start flex-1 xl:align-items-start gap-4"
       >
-        <!-- First Column -->
+        <!-- Name, Tags und Beitrag -->
         <div
           class="col-3 flex flex-column align-items-center sm:align-items-start gap-3"
         >
@@ -58,7 +58,7 @@
           </div>
         </div>
 
-        <!-- Second Column -->
+        <!-- Abteilungen des Mitglieds -->
         <div class="col-3 flex flex-column justify-content-start text-900">
           <p class="text-2xl font-bold">Abteilungen</p>
           <div *ngFor="let department of user.departments" class="text-xl">
@@ -66,7 +66,7 @@
           </div>
         </div>
 
-        <!-- Third Column -->
+        <!-- Buttons und Dropdown, wenn mehrere Abteilungen zugeteilt sind -->
         <div class="col flex flex-column align-items-end gap-3">
           <div class="flex">
             <p-dropdown
@@ -80,7 +80,10 @@
               class="ml-3"
               label="Heute anwesend"
               icon="pi pi-stopwatch"
-              (click)="createAttendanceToday(user)"
+              [disabled]="
+                user.departments.length > 1 && this.selectedDepartment == null
+              "
+              (onClick)="createAttendanceToday(user)"
             ></p-button>
           </div>
           <div class="flex align-items-center">
